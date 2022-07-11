@@ -1,0 +1,219 @@
+<html><head><meta charset="utf-8"><title>28：灵魂拷问：Node中的Event-Loop与浏览器有何不同？-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        28：灵魂拷问：Node中的Event-Loop与浏览器有何不同？
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-26 14:25:51
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img2.sycdn.imooc.com/5ec513ed00016f2006400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">勤能补拙是良训，一分辛劳一分才。——华罗庚<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如标题所示，这是一道大厂面试官普遍钟爱的面试题。要想答出 Node 中的 Event-Loop 和浏览器有啥区别，首先你得能说清楚，Node 中的 Event-Loop 本身是怎么一回事。</p>
+</div><div class="cl-preview-section"><h2 id="node技术架构分析-认识-libuv" style="font-size: 30px;">Node技术架构分析-认识 libuv</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里我为大家画了一张简化的 Node 架构图：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ec64b4c0001171408600626.png" data-original="//img1.sycdn.imooc.com/5ec64b4c0001171408600626.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">Node整体上由这三部分组成：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">
+<p style="font-size: 20px; line-height: 38px;">应用层：这一层就是大家最熟悉的 Node.js 代码，包括 Node 应用以及一些标准库。</p>
+</li>
+<li style="font-size: 20px; line-height: 38px;">
+<p style="font-size: 20px; line-height: 38px;">桥接层：Node 底层是用 C++ 来实现的。桥接层负责封装底层依赖的 C++ 模块的能力，将其简化为 API 向应用层提供服务。</p>
+</li>
+<li style="font-size: 20px; line-height: 38px;">
+<p style="font-size: 20px; line-height: 38px;">底层依赖：这里就是最最底层的 C++ 库了，支撑 Node 运行的最基本能力在此汇聚。其中需要特别引起大家注意的就是 V8 和 libuv：</p>
+<ul>
+<li style="font-size: 20px; line-height: 38px;">V8 是 JS 的运行引擎，它负责把 JavaScript 代码转换成 C++，然后去跑这层 C++ 代码。</li>
+<li style="font-size: 20px; line-height: 38px;"><strong>libuv：它对跨平台的异步I/O能力进行封装，同时也是我们本节的主角：Node 中的事件循环就是由 libuv 来初始化的。</strong></li>
+</ul>
+</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">注意哈：这里第一个区别来了——浏览器的 Event-Loop 由各个浏览器自己实现；而 Node 的 Event-Loop 由 libuv 来实现。</p>
+</div><div class="cl-preview-section"><h2 id="libuv中的-event-loop-实现" style="font-size: 30px;">libuv中的 Event-Loop 实现</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">libuv 主导循环机制共有六个循环阶段。这里我引用 Node 官方（出处：<a href="https://nodejs.org/zh-cn/docs/guides/event-loop-timers-and-nexttick/">https://nodejs.org/zh-cn/docs/guides/event-loop-timers-and-nexttick/</a>）的一张图给大家作说明：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ec64bbf0001476c15300928.png" data-original="//img1.sycdn.imooc.com/5ec64bbf0001476c15300928.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">（注：Node 官方给出的这张图非常值得参考，不过不建议大家直接通过阅读其官方文档来理解事件循环，一些表达还是会相对比较生涩，打击积极性）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们先来瞅瞅这六个阶段各是处理什么任务的：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;"><strong>timers阶段</strong>：执行 setTimeout 和 setInterval 中定义的回调；</li>
+<li style="font-size: 20px; line-height: 38px;"><strong>pending callbacks</strong>：直译过来是“被挂起的回调”，如果网络I/O或者文件I/O的过程中出现了错误，就会在这个阶段处理错误的回调（比较少见，可以略过）；</li>
+<li style="font-size: 20px; line-height: 38px;"><strong>idle, prepare</strong>：仅系统内部使用。这个阶段我们开发者不需要操心。（可以略过）；</li>
+<li style="font-size: 20px; line-height: 38px;"><strong>poll （轮询阶段）</strong>：重点阶段，这个阶段会执行I/O回调，同时还会检查定时器是否到期；</li>
+<li style="font-size: 20px; line-height: 38px;"><strong>check（检查阶段）</strong>：处理 setImmediate 中定义的回调；</li>
+<li style="font-size: 20px; line-height: 38px;"><strong>close callbacks</strong>：处理一些“关闭”的回调，比如<code>socket.on('close', ...)</code>就会在这个阶段被触发。</li>
+</ul>
+</div><div class="cl-preview-section"><h2 id="宏任务与微任务" style="font-size: 30px;">宏任务与微任务</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">和浏览器中一样，Node 世界里也有宏任务与微任务之分。划分依据与我们上文描述的其实是一致的：</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">常见的 macro-task 比如： setTimeout、setInterval、 setImmediate、 script（整体代码）、I/O 操作、UI 渲染等。</p>
+<p style="font-size: 20px; line-height: 38px;">常见的 micro-task 比如: process.nextTick、Promise、MutationObserver 等</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">需要注意的是，setImmediate 和 process.nextTick 是 Node 独有的，在本节各位会有充分的机会和它们打交道。</p>
+</div><div class="cl-preview-section"><h2 id="一起走一遍-node-中的事件循环流程" style="font-size: 30px;">一起走一遍 Node 中的事件循环流程</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这六个阶段中，大家需要重点关注的就是 <strong>timers、poll 和 check</strong> 这 三个阶段，相关的命题也基本上是围绕它们来做文章。不过在进行考点点拨之前，我们还是要把整个循环的流程给走一遍：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;">执行全局的 Script 代码（与浏览器无差）；</li>
+<li style="font-size: 20px; line-height: 38px;">把微任务队列清空：注意，Node 清空微任务队列的手法比较特别。在浏览器中，我们只有一个微任务队列需要接受处理；但在 Node 中，有两类微任务队列：next-tick 队列和其它队列。其中这个 next-tick 队列，专门用来收敛 process.nextTick 派发的异步任务。<strong>在清空队列时，优先清空 next-tick 队列中的任务，随后才会清空其它微任务</strong>；</li>
+<li style="font-size: 20px; line-height: 38px;">开始执行 macro-task（宏任务）。注意，Node 执行宏任务的方式与浏览器不同：在浏览器中，我们每次出队并执行一个宏任务；而在 Node 中，我们每次会尝试清空当前阶段对应宏任务队列里的所有任务（除非达到了系统限制）；</li>
+<li style="font-size: 20px; line-height: 38px;">步骤3开始，会进入 3 -&gt; 2 -&gt; 3 -&gt; 2…的循环（整体过程如下所示）:</li>
+</ol>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js">micro<span class="token operator">-</span>task<span class="token operator">-</span>queue <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">&gt;</span> timers<span class="token operator">-</span>queue 
+                            <span class="token operator">|</span>
+                            <span class="token operator">|</span>
+micro<span class="token operator">-</span>task<span class="token operator">-</span>queue <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">&gt;</span> pending<span class="token operator">-</span>queue
+                            <span class="token operator">|</span>
+                            <span class="token operator">|</span>
+micro<span class="token operator">-</span>task<span class="token operator">-</span>queue <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">&gt;</span>  polling<span class="token operator">-</span>queue
+                            <span class="token operator">|</span>
+                            <span class="token operator">|</span>
+micro<span class="token operator">-</span>task<span class="token operator">-</span>queue <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">&gt;</span>  check<span class="token operator">-</span>queue
+                            <span class="token operator">|</span>
+                            <span class="token operator">|</span>
+micro<span class="token operator">-</span>task<span class="token operator">-</span>queue <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">&gt;</span>  close<span class="token operator">-</span>queue
+                            <span class="token operator">|</span>
+                            <span class="token operator">|</span>
+micro<span class="token operator">-</span>task<span class="token operator">-</span>queue <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">&gt;</span> timers<span class="token operator">-</span>queue 
+
+<span class="token operator">...</span><span class="token operator">...</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">​</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">整体来看，Node 中每次执行异步任务都是以批量的形式，“一队一队”地执行。循环形式为：宏任务队列 -&gt; 微任务队列 -&gt; 宏任务队列 —&gt; 微任务队列… 这样交替进行。</p>
+</div><div class="cl-preview-section"><br>
+经过咱们上面这一通讲，相信把 Node 和浏览器之间不同的 Event-Loop 机制捋清楚，对现在的你来说已经不是什么难事了。   
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不过，可别高兴得太早。事件循环这块，比起问答题，更常见的是编码阅读题。咱们下面就一起来通过一系列的真题巩固一下认知。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1967">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            27  浏览器中的 Event-Loop
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1972">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            29 Node事件循环命题思路剖析
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img1.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

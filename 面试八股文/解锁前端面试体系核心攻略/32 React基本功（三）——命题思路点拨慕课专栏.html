@@ -1,0 +1,173 @@
+<html><head><meta charset="utf-8"><title>32 React基本功（三）——命题思路点拨-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        32 React基本功（三）——命题思路点拨
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-29 14:15:03
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img4.sycdn.imooc.com/5ecdccde0001752d06400346.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">生活永远不像我们想像的那样好，但也不会像我们想像的那样糟。——莫泊桑<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><h1 id="react基本功（三）——命题思路点拨">React基本功（三）——命题思路点拨</h1>
+</div><div class="cl-preview-section"><h2 id="react-基础备考思路点拨" style="font-size: 30px;">React 基础备考思路点拨</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">前面我们聊的生命周期、通信机制，这是 React 基础面试中的“大头”。所谓“大头”，意思就是说知识成体系、能深挖、同时始终保持着稳定的热度。搞定了“大头”，各位心里多多少少该有些底气。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不过，针对 React 基础来说，搞定“大头”还不够——如果你有一些面试经验，相信你一定能感觉出来：不同于 React 核心部分（这里指 Virtual Dom、Fiber 等一些非常稳定的理论知识），React 基础的考察是具有发散性的。不同的公司、不同的面试官有着不同的脾气。“大头”好抓，小题却难猜，这可能会使许多同学感到无从下手。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在本节，我会结合自身的面试经验（包括面别人和被别人面的经验），结合与多位面试官、候选人探讨 React 面试的经历，为大家整合出一系列的 React 基础命题思路，帮助大家最大限度地排除知识盲点。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">此外，各位也需要明确一个基本原则：面试官会出什么样的题，这是一个不可知事件。我们在这一节要做的，不是“我猜题，你来背”，而是我来抛出一条一条的线（实际上全部都是真实面试场景下难倒过不少人的面试题，可别瞧不起它们），这些线指向了 React 基础知识的不同方向。如果某个问题“痛”到你了，请你一定要抓紧它，沿着这个问题所在的那条“线”摸过去，把它背后的整条知识脉络给摸清楚。</p>
+</div><div class="cl-preview-section"><h2 id="这是属于你的实战环节" style="font-size: 30px;">这是属于你的实战环节</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">接下来，我会就 React 基础的四个命题方向，各抛出一道、或数道有代表性的真题。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>这些题目并不难</strong>，你可以在搜索引擎、在官方文档、在你收藏夹的各种面经里找到它们的答案。但是注意，在这一节，重要的不是答案，而是你面对这一道题时的感觉——是一无所知，还是胸有成竹？记住这种感觉，让它指导你接下来的行为。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">以下问题，<strong>我不会直接给出答案。</strong> 利用搜索引擎也好、利用官方文档也好，请尝试归纳出一套自己的答案——你需要具备这种能力。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这里，我鼓励大家把自己整合出的答案贴进我们文章下面的评论区里、更希望大家能够从别人的答案里学习。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在专栏更新结束后，我会从评论区里筛选出符合我预期的答案予以公示——如果没有出现这样的答案，我会给你们一套我的答案（当然，是参考答案，别总想着背答案：））。</p>
+</div><div class="cl-preview-section"><h2 id="react-组件设计模式" style="font-size: 30px;">React 组件设计模式</h2>
+</div><div class="cl-preview-section"><h4 id="什么是hoc（higher-order-component）？适用于什么场景？" style="font-size: 26px;">1. 什么是HoC（Higher-Order Component）？适用于什么场景？</h4>
+</div><div class="cl-preview-section"><h4 id="什么时候应该选择用class实现一个组件，什么时候应该用一个函数实现一个组件？" style="font-size: 26px;">2. 什么时候应该选择用class实现一个组件，什么时候应该用一个函数实现一个组件？</h4>
+</div><div class="cl-preview-section"><h4 id="你喜欢react-stateless组件吗？为什么？（发散题目-）" style="font-size: 26px;">3. 你喜欢React Stateless组件吗？为什么？（发散题目 ）</h4>
+</div><div class="cl-preview-section"><h2 id="setstate-深入" style="font-size: 30px;">setState 深入</h2>
+</div><div class="cl-preview-section"><h4 id="当组件的setstate函数被调用之后，会发生什么？" style="font-size: 26px;">1. 当组件的setState函数被调用之后，会发生什么？</h4>
+</div><div class="cl-preview-section"><h4 id="setstate可以接受函数为参数吗？有什么作用？" style="font-size: 26px;">2. setState可以接受函数为参数吗？有什么作用？</h4>
+</div><div class="cl-preview-section"><h4 id="section" style="font-size: 26px;"></h4>
+</div><div class="cl-preview-section"><h2 id="事件系统" style="font-size: 30px;">事件系统</h2>
+</div><div class="cl-preview-section"><h4 id="react事件机制是怎样的？为什么它要定义一套事件体系？" style="font-size: 26px;">React事件机制是怎样的？为什么它要定义一套事件体系？</h4>
+</div><div class="cl-preview-section"><h2 id="react-底层原理" style="font-size: 30px;">React 底层原理</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">（这两个问题，我会在接下来的“Virtual Dom”和“Fiber 架构”专题中帮各位给出答案。如果你心里暂时没谱，不妨先在跟我去扒一扒这两个话题，相信你回过头来看这两道题时，一定能给出更好的答案。）</p>
+</div><div class="cl-preview-section"><h4 id="为什么我们利用循环产生的组件中要用上key这个特殊的prop？" style="font-size: 26px;">1. 为什么我们利用循环产生的组件中要用上key这个特殊的prop？</h4>
+</div><div class="cl-preview-section"><h4 id="什么是fiber？是为了解决什么问题？" style="font-size: 26px;">2. 什么是Fiber？是为了解决什么问题？</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">期待看到你的思考和成长^_^。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/2009">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            31 React基本功（二）——深入组件通信机制
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/2073">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            33 真正理解虚拟DOM（一）——虚拟DOM思想
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img4.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

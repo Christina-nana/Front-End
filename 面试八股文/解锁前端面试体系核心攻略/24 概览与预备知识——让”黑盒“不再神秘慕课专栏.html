@@ -1,0 +1,164 @@
+<html><head><meta charset="utf-8"><title>24 概览与预备知识——让”黑盒“不再神秘-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        24 概览与预备知识——让”黑盒“不再神秘
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-14 09:12:18
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img1.sycdn.imooc.com/5eba88b60001cc7622501500.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">时间像海绵里的水，只要你愿意挤，总还是有的。——鲁迅<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><h2 id="浏览器“零部件”解密" style="font-size: 30px;">浏览器“零部件”解密</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">正如了解一台电脑最好的方法是把它拆了再装回去，学习一个框架最好的方法是把它的源码吃透然后去模仿甚至逾越它——我们掌握浏览器知识，也应当从“拆”一个浏览器开始。首先大家需要了解浏览器里有哪些“零部件”：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba87ef00015a1e13141002.png" data-original="//img1.sycdn.imooc.com/5eba87ef00015a1e13141002.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们看到，浏览器的内心世界不仅是丰富的，更是“层层递进”的。如果你还没有探索过浏览器的内在世界，那么你至少也和它的“外壳”——用户界面打过交道。接下来咱们要做的，就是从这个“外壳”开始，一层一层地“剥开它的心”，理解这些角色之间的关系、理解它们合作的方式。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家首先要理解的是，我们通过用户界面执行的每一个操作，不管是点击也好、敲击键盘也好，这些动作在浏览器看来都是“命令”。用户界面只是一层皮，它没有独自处理命令的能力，但它可以把命令转交给“幕后”的浏览器引擎。浏览器引擎虽然也无法独自完成这些命令，但能“读懂”你的命令，进而把这个命令用渲染引擎能理解的方式传递给它——没错，大家发现了，我们这张图里的前两个角色，都是“领导”一般的存在：它们不做特别具体的工作，简直就是命令的搬运工。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">接下来，主角登场了——<strong>渲染引擎</strong>出现了。它可是真正的“大boss”。从图中我们可以清楚地看出，渲染引擎不仅自己有一套任务逻辑，它还能够调度一系列执行层面的工作模块。看似毫无生机的网络资源，经过了渲染引擎的“魔术手”之后，便能够摇身一变、化身为色彩斑斓可交互的页面呈现在你面前了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">正是因为渲染引擎有着如此关键的地位，在早年，许多浏览器相关的资料中就认为“渲染引擎”和“JS引擎”就是一个浏览器的内核。近年来，随着 JS 引擎越来越独立，人们干脆直接把浏览器内核和渲染引擎划上了等号。可以说，渲染引擎，是一个浏览器的灵魂。</p>
+</div><div class="cl-preview-section"><h2 id="浏览器内核分类" style="font-size: 30px;">浏览器内核分类</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在人类世界里，区分开不同人类的依据是他们各自迥异的内心世界；在百花齐放的浏览器世界里，不同的浏览器也因为有着不同的内核会被划分为不同的种类。我们理解浏览器时，往往不需要逐个地去研究（这样做效率非常低下），而是“抓主要矛盾”——抓住最典型的那一类内核来做文章。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">目前市面上常见的浏览器内核有以下几种：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">Trident（IE）</li>
+<li style="font-size: 20px; line-height: 38px;">Gecko（火狐）</li>
+<li style="font-size: 20px; line-height: 38px;">Blink（Chrome、Opera）</li>
+<li style="font-size: 20px; line-height: 38px;">Webkit（Safari）。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里面，大家最熟悉的名字肯定是 WebKit。当我们提到 WebKit 的时候，很多同学第一反应就是“它是 Chrome 的内核！”。确实，早年由于 Chrome 和 Safari 的流行，其采用的 WebKit 内核也跟着名声大噪。不过需要注意的是，Chrome 内核如今早已更迭为了 Blink——名字是一个全新的名字，但本质上，Blink 也是基于 WebKit 衍生出来的一个分支。因此，WebKit 无疑仍然是当下浏览器世界真正的“大Boss”，也是最具有学习意义的学习材料。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">接下来的一节开始，我们的就以 WebKit 内核为例，来看看浏览器的渲染引擎是怎么工作的。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1945">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            23 导读--开始之前
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1949">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            25 图解浏览器渲染引擎工作原理
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img2.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

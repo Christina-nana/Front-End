@@ -1,0 +1,363 @@
+<html><head><meta charset="utf-8"><title>07 this 基本指向原则解析-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        07 this 基本指向原则解析
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-12 10:03:33
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img2.sycdn.imooc.com/5e699b920001eb8d06400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">人生的价值，并不是用时间，而是用深度去衡量的。——列夫·托尔斯泰<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><h2 id="this-指向谁？" style="font-size: 30px;">this 指向谁？</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">多数情况下，this 指向调用它所在<strong>方法</strong>的那个<strong>对象。</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">**说得更通俗点， 谁调的函数，this 就归谁。**当调用方法没有明确对象时，this 就指向全局对象。在浏览器中，指向 window；在 Node 中，指向 Global。（严格模式下，指向 undefined）</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>this 的指向是在调用时决定的，而不是在书写时决定的。这点和闭包恰恰相反。</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">（注：此处我们谈论的是“多数情况”，也是面试中考察权重较高的一种基本情况。故本节为“基本指向原则解析”。关于 this 的花式捆绑，我们在下一节会详细探讨）</p>
+</div><div class="cl-preview-section"><h3 id="区分-“声明位置”-与-“调用位置”">区分 “声明位置” 与 “调用位置”</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">js 是词法作用域模型，无论我是一个对象也好，一个方法也好，它的生命周期只和我们声明它的位置有关。我把它写在哪个位置，它就活在哪个位置。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们来看这样一个例子：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token comment">// 声明位置</span>
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`你好，我是</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> you <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiaoming'</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> me<span class="token punctuation">.</span>hello
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 调用位置</span>
+me<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// xiuyan</span>
+you<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// xiaoming</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">各位看到 hello 在代码中分别被 me 和 you 调用了，因此两次调用的 this 也就分别指向了 me 和 you，这没毛病。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们稍微把这个例子改一下：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token comment">// 声明位置</span>
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`你好，我是</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+<span class="token keyword">var</span> hello <span class="token operator">=</span> me<span class="token punctuation">.</span>hello 
+
+<span class="token comment">// 调用位置</span>
+me<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 你好，我是xiuyan</span>
+<span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 你好， 我是BigBear</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里我们直接调用 hello 的时候，输出了全局的 name 变量。我们可以理解为是因为 name 和 hello 都挂在在全局对象 window 上，所以 hello () 其实等价于 window.hello ()，此时 hello 方法内部的 this 自然指向 window，于是 <a href="http://this.name">this.name</a> 就等价于 <a href="http://window.name">window.name</a>。这也没毛病。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们再改一下：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token comment">// 声明位置</span>
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`你好，我是</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> you <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiaoming'</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> targetFunc <span class="token operator">=</span> me<span class="token punctuation">.</span>hello
+    <span class="token function">targetFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+
+<span class="token comment">// 调用位置</span>
+you<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">上面这段代码，大家先给自己 1 分钟的时间，在脑子里面跑一下。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">OK，现在我默认你心里已经有了一个自己的答案了（还没有跑完的同学不要急着往下看哈，自觉暂停一下，先有一个自己的结论再来看我们的解析，收获会更大）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">调用位置输出的结果是 BigBear—— 竟然不是 xiaoming？的确，我们打眼看过去，直觉上肯定会认为是 you 这个对象在调用 hello 方法、进而调用 targetFunc，所以此时 this 肯定指向 you 对象啊！为啥会输出一个 window 上的 name 呢？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们再复习一下我们开头那句话 ——“this 指向调用它所在<strong>方法</strong>的那个<strong>对象</strong>”。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">回头看我们例题中的 targetFunc 这个方法，大家之所以第一直觉会认为它的 this 应该指向 you 这个对象，其实还是因为把 “声明位置” 和 “调用位置” 混淆了。我们看到虽然 targetFunc 是在 you 对象的 hello 方法里声明的，但是在调用它的时候，我们是不是没有给 targetFunc 指明任何一个对象作为它前缀？ 所以 you 对象的 this 并不会神奇地自动传入 targetFunc 里，js 引擎仍然会认为 targetFunc 是一个挂载在 window 上的方法，进而把 this 指向 window 对象。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在面试命题过程中，this 指向问题如果想往难了出， 就会像楼上这样把声明位置和调用位置故意揉在一起，考验你对两者的区分能力。 但只要各位能记住，“<strong>不管方法被书写在哪个位置，它的 this 只会跟着它的调用方走</strong>” 这个核心原则，就一定不会出错。</p>
+</div><div class="cl-preview-section"><h2 id="“秒杀”-技巧-——-特殊情境下的-this-指向" style="font-size: 30px;">“秒杀” 技巧 —— 特殊情境下的 this 指向</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">好消息！在三种特殊情境下，this 会 100% 指向 window：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">立即执行函数（IIFE）</li>
+<li style="font-size: 20px; line-height: 38px;">setTimeout 中传入的函数</li>
+<li style="font-size: 20px; line-height: 38px;">setInterval 中传入的函数</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">也就是说大家在做 this 指向题的时候，第一步其实倒不该是老老实实去看 this 所在的函数属于哪个对象，而是应该<strong>先定位 this 是否出现在了以上三种类型的函数里面</strong>。如果是，那么想也不想，直接去对应 window 就好了～</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">老实做题没毛病，但太慢了，显得你不够老练。我们要的，是秒杀～</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们一个一个来看这三种情景对应的面试题一般会怎么出：</p>
+</div><div class="cl-preview-section"><h4 id="立即执行函数" style="font-size: 26px;">立即执行函数</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">所谓立即执行函数，就是定义后立刻调用的匿名函数（参见下面这道例题里 hello 方法的函数体里这种写法）。</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  <span class="token comment">// 声明位置</span>
+  sayHello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`你好，我是</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>cb<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 调用位置</span>
+      <span class="token function">cb</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>sayHello<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+me<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 大家再猜下输出啥了？</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">经过我们楼上的提点，相信这里大家可以想都不想就说出 me.hello 的执行结果，没错，就是 BigBear ， 是 <a href="http://window.name">window.name</a> 的值。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">但其实，即便不考虑立即执行的匿名函数这种所谓的“特殊情况”，大家按照我们上面的指向原则来分析，结果也是一样一样的。 立即执行函数作为一个匿名函数，在被调用的时候，我们往往就是直接调用，而不会（也无法）通过属性访问器（ 即 <a href="http://xx.xxx">xx.xxx</a>） 这样的形式来给它指定一个所在对象，所以它的 this 是非常确定的，就是默认的全局对象 window。</p>
+</div><div class="cl-preview-section"><h4 id="settimeout-和-setinterval-中传入的函数" style="font-size: 26px;">setTimeout 和 setInterval 中传入的函数</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">考虑到 setTimeout 和 setInterval 中函数的 this 指向机制其实是一样的，咱们这里拿 setTimeout 来开刀就够了：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`你好，我是</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+me<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 你好，我是BigBear</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">是不是觉得好神奇？我们的 <a href="http://this.name">this.name</a> 明明看起来是在 me.hello () 里被调用的，结果却输出了 <a href="http://window.name">window.name</a>。 setTimeout 到底对函数做了什么？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">其实，我们所看到的延时效果（setTimeout）和定时效果（setInterval），都是在全局作用域下实现的。无论是 setTimeout 还是 setInterval 里传入的函数，都会首先被交付到全局对象手上。因此，函数中 this 的值，会被自动指向 window。</p>
+</div><div class="cl-preview-section"><h2 id="“危险”-的严格模式" style="font-size: 30px;">“危险” 的严格模式</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">相信大家在进行我们专栏学习前，一定有不少同学听说过 “严格模式下 window 会变成 undefined” 这样的说法。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在有的书籍中，也会强调 <strong>setTimeout 传入函数中 this 的值在非严格模式下指向 window 对象，在严格模式下是 undefined</strong>。好像只要加了严格模式，那么 undefined 就是一种必然 —— 确实如此吗？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">事实上，严格模式确实在一些情况下会导致 this 指向 undefined， 但并非总是如此 —— 没错，事情并不简单，我们需要分情况来看：</p>
+</div><div class="cl-preview-section"><h4 id="普通函数中的-this-在严格模式下的表现" style="font-size: 26px;">普通函数中的 this 在严格模式下的表现</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">所谓 “普通函数” ，这里我们是相对于箭头函数来说的。在非严格模式下，直接调用普通函数时，正如我们开篇所说，函数中的 this 默认指向全局变量（window 或 global）：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">showThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">showThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 输出 Window 对象</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">而在严格模式下，this 将保持它被指定的那个对象的值，所以，如果没有指定对象，this 就是 undefined ：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token string">'use strict'</span>
+
+<span class="token keyword">function</span> <span class="token function">showThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">showThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// undefined</span>
+</code></pre>
+</div><div class="cl-preview-section"><h4 id="全局代码中的-this-在严格模式下的表现" style="font-size: 26px;">全局代码中的 this 在严格模式下的表现</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">所谓全局代码中的 this， 就是在全局作用域下执行的函数 / 代码段里的 this，它可以是这样的：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token string">'use strict'</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token comment">// 直接在全局代码里尝试去拿 this</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">也可以是这样的：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token string">'use strict'</span>
+
+<span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  hello<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 全局作用域下实现的延时函数</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`你好，我是</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+me<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 你好，我是BigBear</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">像这样处于全局代码中的 this， 不管它是否处于严格模式下，<strong>它的 this 都指向 Window（这点要特别注意，区分度非常高，很多同学面试的时候会误以为这里也是 undefined ）</strong>。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">所以说，严格模式 “危险”，它危险在哪？undefined 固然可怕，它往往使我们代码报错的元凶。但站在辅助大家面试的角度，见到 ‘use strict’ 就立刻认为 this 会是 undefined ， 无疑是件更危险的事情。因此，严格模式下 this 的不同表现，还望大家牢记～</p>
+</div><div class="cl-preview-section"><h2 id="箭头函数" style="font-size: 30px;">箭头函数</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">箭头函数中的 this 比较特别，它和严格模式、非严格模式啥的都没关系。它和闭包很相似，都是认“死理”—— 认“词法作用域”的家伙。所以说箭头函数中的 this，和你如何调用它无关，由你书写它的位置决定（和咱们普通函数的 this 规则恰恰相反～），例如：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  <span class="token comment">// 声明位置</span>
+  hello<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 调用位置</span>
+me<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// BigBear</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这个例子里，因为 this 在书写的时候，它所在的作用域是全局作用域，于是这个 this 就和全局对象绑在了一起。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">理解箭头函数的 this 指向规则，和理解普通函数的指向规则，需要的是两套完全相反的脑回路。当两个概念像这样剪不断理还乱、非常容易被混淆的时候，面试官就兴奋了。所以有时候箭头函数的 this 和普通函数的 this 放在一起考，那就是一道新面试题了（你看这帮出题的老头多无聊 / 摊手）：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">问：以下两次函数调用的输出结果是什么？为什么？</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span>
+  a<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  func2<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  
+  func3<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// func1</span>
+<span class="token keyword">var</span> <span class="token function-variable function">func1</span>  <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// func2</span>
+<span class="token keyword">var</span> func2 <span class="token operator">=</span> obj<span class="token punctuation">.</span>func2
+<span class="token comment">// func3</span>
+<span class="token keyword">var</span> func3 <span class="token operator">=</span> obj<span class="token punctuation">.</span>func3
+
+<span class="token function">func1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">func2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">func3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+obj<span class="token punctuation">.</span><span class="token function">func2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+obj<span class="token punctuation">.</span><span class="token function">func3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">答案是 1、1、1、1、2。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">各位知道为什么吗？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">（必须得知道！因为这道题考察的点，都是我们已经讲透的东西。如果你没有做对，先不要急着往下看，把这一节从头到尾再嚼一遍吧～）</p>
+</div><div class="cl-preview-section"><h2 id="问题来了" style="font-size: 30px;">问题来了</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">理解了 this 指向的原理之后，问题就来了 —— 这个 this， 它太蠢太被动了，只知道跟着调用自己的对象走（箭头函数里只认词法作用域），堪称 JS 版的 “有奶便是娘”。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">可很多时候，我们不想让 this 这么没节操， 我们希望它能够按照我们的想法指向我们想让它指向的那个对象。于是 “如何改变 this 指向” 这个问题，作为一道经典面试题，永远地留在了各大团队的面试题库里。在下一节，我们就会针对这个问题展开探讨。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1616">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            06 JS 内存管理机制解析
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1618">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            08 改变 this 指向、深入理解 call/apply/bind 的原理
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img4.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

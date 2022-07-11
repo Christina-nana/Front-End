@@ -1,0 +1,256 @@
+<html><head><meta charset="utf-8"><title>12 异步编程模型与异步解决方案-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        12 异步编程模型与异步解决方案
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-03-31 10:34:26
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img3.sycdn.imooc.com/5e82a69a00016f2006400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">知识犹如人体的血液一样宝贵。——高士其<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">JS 异步解决方案，始终是面试中的热点与重点。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不少同学对异步知识存在一些认知误区，甚至压根没有意识到这个知识体系的存在。一些本身技术水平不错的同学，在面试前做了大量的 Promise、async/await 相关的面试题，对单个知识点的特性和命题思路了如指掌，却在面对。“谈谈你所了解的 JS 异步方案”、或者稍微隐晦一点的 “Promise 到底解决了什么痛点？这样的痛点还可以如何解决？” 这样的问题时手足无措，实在让人惋惜。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">事实上，大家在各种面经里喜闻乐见的 Promise、Generator、async/await 之流，之所以如此顺利地成为面试官们的心头好，无非就是因为它们可以帮助我们优雅地解决异步。面试官固然也会想要通过考察孤立的知识点来考察你基本功的扎实度，但本质上，他真正想要的往往都是那个 “更上一层楼” 的答案 —— 想知道你对 JS 异步 以及异步解决方案，到底理解到什么程度。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">异步到底是啥？为啥这么重要？为了解决异步，我们有哪些可取的手段？手段本身有哪些利弊、手段与手段之间又存在着怎样的进化关系？本节及下节，我们就通过回答这一系列的问题，来帮大家建立起一个坚不可摧的 JS 异步知识体系。</p>
+</div><div class="cl-preview-section"><h2 id="生活中的同步与异步" style="font-size: 30px;">生活中的同步与异步</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">计算机领域中的同步和异步，其实和我们生活当中排队买东西很相似。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">比如说咱现在去 KFC 买炸鸡。你点餐、付款可能只需要一分钟，但是等炸鸡做好需要 10 分钟。如果这时候店员跟你说，按照咱们店的规定，客人必须一直站在这儿等着，直到餐品出完为止你才能走、换下一位顾客。这种情况下，你这 10min 除了站在收银台前面和店员大眼瞪小眼外、啥也不能干；排在你后面的那些顾客，更是难上加难。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e82a74c000144a611840362.png" data-original="//img1.sycdn.imooc.com/5e82a74c000144a611840362.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这种严格按顺序执行任务、做完一件才肯做另一件的行为方式，就是同步编程的特征。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不过要真这么玩，KFC 估计也撑不到现在。实际上我们点餐的过程中，点餐、付款的任务完成后，你大可不必原地等出餐，而是会领到一张取餐纸条。这中间你可以坐在旁边的椅子上玩手机、可以出去转转商场、可以顺手去隔壁电影院买张票 —— 你干啥都行。等出餐成功时，你取餐纸条上的号码会被公布在 KFC 大堂的屏幕上，此时凭纸条去取餐就好了。在这个过程中，点餐和出餐的过程分离到两条任务线里，点餐 1 分钟 1 分钟地点，出餐慢慢来出，只要出完之后通知到取餐人就行了。这就是异步的智慧。<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e82a7a10001a96c13840868.png" data-original="//img1.sycdn.imooc.com/5e82a7a10001a96c13840868.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这不只是 KFC 的智慧，也是 JS 的智慧。</p>
+</div><div class="cl-preview-section"><h2 id="js中的同步与异步" style="font-size: 30px;">JS 中的同步与异步</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">JS 语言的任务执行模式就分为同步和异步。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家基于买炸鸡这个故事来理解 JS 中的同步和异步：同步，就是说后一个任务必须严格等待前一个任务执行完再执行，任务的执行顺序和排列顺序是高度一致的（上一个人取到炸鸡之前，下一个人不许点餐）；异步，则恰恰相反，任务的执行顺序不必遵循排列顺序。比如说前一个任务就算没执行完（炸鸡还没出餐），也没关系，先执行下一个任务就好（让下一个人先点餐），等前一个任务的执行结果啥时候出来了（炸鸡炸好了），我再把它临时穿插进来执行下（电脑屏幕上通知到取餐人）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这其中，异步模式至关重要。大家知道，对我们前端来说，和 KFC 这样的服务行业一样，用户体验就是命。炸鸡店让客人苦等半天吃个炸鸡，你这个店要挨骂；我们页面让用户苦等 2 分钟等一个表单提交的返回结果，同样是极不友好的一种交互体验。假如我们的主线程里，充斥着用户事件、ajax 任务等高耗时的操作，这种情况下还不采用异步方案，页面的卡顿甚至卡死将是不可避免的。</p>
+</div><div class="cl-preview-section"><h2 id="异步进化史" style="font-size: 30px;">异步进化史</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">异步在实现上，依赖一些特殊的语法规则。从整体上来说，异步方案经历了如下的四个进化阶段：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">回调函数 —&gt; Promise —&gt; Generator —&gt; async/await。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">其中 Promise、Generator 和 async/await 都是在 ES2015 之后，慢慢发展起来的、具有一定颠覆性的新异步方案。相较于 “回调函数 “时期的刀耕火种而言，具有划时代的意义。</p>
+</div><div class="cl-preview-section"><h2 id="“回调函数”时期" style="font-size: 30px;">“回调函数” 时期</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">所谓 “回调函数” 时期，这里严格来说指代的其实是 Promise 出现前的这么一个相对早期的阶段。在这个阶段里，回调是异步最常见、最基本的实现手段，却不是唯一的招数 —— 像事件监听、发布订阅这样的方式，也经常为我们所用。</p>
+</div><div class="cl-preview-section"><h4 id="事件监听" style="font-size: 26px;">事件监听</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这种形式相信每位前端同学都不陌生，给目标 DOM 绑定一个监听函数，我们用的最多的是 addEventListener：</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js">document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'#myDiv'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'我被点击了'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">通过给 id 为 myDiv 的一个元素绑定了点击事件的监听函数，我们把任务的执行时机推迟到了点击这个动作发生时。此时，<strong>任务的执行顺序与代码的编写顺序无关，只与点击事件有没有被触发有关</strong>。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">通过给 id 为 myDiv 的一个元素绑定了点击事件的监听函数，我们把任务的执行时机推迟到了点击这个动作发生时。此时，任务的执行顺序与代码的编写顺序无关，只与点击事件有没有被触发有关。</p>
+</div><div class="cl-preview-section"><h4 id="发布订阅" style="font-size: 26px;">发布订阅</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">发布订阅，是一种相当经典的设计模式。大家可以跳转阅读设计模式 - 发布订阅小节。<br>
+这里我们直接用 jQuery 中封装过的发布订阅做讲解，会更容易理解一些。<br>
+比如说我们想在名为 trigger 的信号被触发后，做点事情，我们可以订阅 trigger 信号：</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">consoleTrigger</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'trigger事件被触发'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+jQuery<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">'trigger'</span><span class="token punctuation">,</span>consoleTrigger<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这样当 trigger 被触发时，上面对应的回调任务就会执行了：</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">publishTrigger</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    jQuery<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span><span class="token string">'trigger'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 2s后，publishTrigger方法执行，trigger信号发布，consoleTrigger就会执行了</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span>publishTrigger<span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家会发现这种模式和事件监听下的异步处理非常相似，它们都把任务执行的时机和某一事件的发生紧密关联了起来。</p>
+</div><div class="cl-preview-section"><h4 id="回调函数" style="font-size: 26px;">回调函数</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">回调函数用的最多的地方其实是在 Node 环境下，我们难免需要和引擎外部的环境有一些交流：比如说我要利用网络模块发起请求、或者要对外部文件进行读写等等。这些任务都是异步的，我们通过回调的形式来实现它们。</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token comment">// -- 异步读取文件</span>
+fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span>filePath<span class="token punctuation">,</span><span class="token string">'utf8'</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span>data<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 输出文件内容</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> https <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'https'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+<span class="token comment">// 发起网络请求</span>
+https<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'目标接口'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+ 
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Error: "</span> <span class="token operator">+</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><h4 id="“回调地狱”" style="font-size: 26px;">“回调地狱”</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">当回调只有一层的时候，看起来感觉没什么问题。但是一旦回调函数嵌套的层级变多了之后，代码的可读性和可维护性将面临严峻的挑战。比如当我们想发起连环网络请求时：</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> https <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'https'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+https<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'目标接口1'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+  https<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'目标接口2'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    https<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'目标接口3'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        https<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'目标接口4'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+          https<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'目标接口5'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+            <span class="token operator">...</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+            <span class="token comment">// 无尽的回调</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这种情形一点也不夸张。而且其实不只是在 http、在 ajax 这样的网络请求场景里有这种谜之代码，在 “Promise 前” 的那个上古时期，我们经常被这种深不见底的回调困扰：</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token function">func1</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>resultA<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">func2</span><span class="token punctuation">(</span>resultA<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>resultB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">func3</span><span class="token punctuation">(</span>resultB<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>resultC<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">func4</span><span class="token punctuation">(</span>resultC<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>resultD<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">func5</span><span class="token punctuation">(</span>resultD<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>resultE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">func6</span><span class="token punctuation">(</span>resultE<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>resultF<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>resultF<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">...</span>
+            <span class="token comment">// 无尽的回调</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这样写代码非常糟糕，它会带来很多问题，最直接的就是：<strong>可读性和可维护性被破坏</strong>。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">首先，你的代码会变得非常难以理解。我们这里为了大家理解方便，把每个回调的内部逻辑都写得极为简单。但是实际开发中，回调逻辑往往是有一定分量的。到时候就不是” 一行叠一行 “这么简单了，而是 “一坨叠一坨”。一眼望去，你很难看出这些回调之间到底是谁套谁。想改 A 处的代码，结果却不小心定位到了 B 处，这都是常有的事。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这时候如果你往里面再添油加醋，比如说加上 this、加上箭头函数、加上自由变量啥的，这段代码再过一个星期回来，你自己都很难看懂，更不要说后来的维护者了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">好在早期的前端世界，我们的展示层业务逻辑并没有十分复杂、Node 也还没有问世。那时，前端人普遍觉得用用事件监听、偶尔嵌套那么一两层的回调，小日子也能过得不错。但是随着逻辑的增长和复杂化、随着 Node 对大量异步操作的诉求日益强烈和明显，人们终于坐不住了，要对回调地狱这只小恶魔下手了。在这样的时代背景下，Promise 出现了。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1621">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            11 原型与面向对象真题解析
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1709">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            13 全面掌握现代异步解决方案
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img1.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

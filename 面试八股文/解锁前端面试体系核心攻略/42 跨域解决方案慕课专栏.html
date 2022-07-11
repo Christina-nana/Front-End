@@ -1,0 +1,289 @@
+<html><head><meta charset="utf-8"><title>42 跨域解决方案-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        42 跨域解决方案
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-10-14 10:57:35
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img4.sycdn.imooc.com/5ee04868000177f106400359.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">最聪明的人是最不愿浪费时间的人。——但丁<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">跨域及跨域解决方案也是一个稳定性比较高的考点。关于跨域如何解决这个问题，不同的人有着不同的思路。笔者之前曾经尝试在团队内做过一次头脑风暴，想看看大家能想出多少种解决跨域的办法，最后竟然数出了近10种之多（可见程序员的脑洞之大，哈哈）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不过，面试的时候，在跨域这块想要“出奇制胜”其实是一个不太合适的事情。一来强记太多的方法，脑壳容易懵，不利于你现场发挥；二来面试官多数情况下想听的也就只有那么几个，讲得太多，对方也会不耐烦（我个人就有被打断的经历）。本节我们针对面试官比较喜闻乐见的几个思路来讲，也鼓励大家私下里结合自己的开发经验补充自己的思路，但不鼓励死磕。</p>
+</div><div class="cl-preview-section"><h2 id="什么是跨域" style="font-size: 30px;">什么是跨域</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">跨域的故事，要从“同源策略”说起了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里的源(origin)指的是协议、域名、端口号，同源指的是在url中协议、域名、端口号均相同。那么同源策略是浏览器的一个安全功能，不同源的脚本在没有明确授权的情况下，不能读写对方资源。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">注意这个“不能读写资源”的含义，它主要限制了以下三个方面：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">Cookie、LocalStorage 和 IndexDB 无法读取</li>
+<li style="font-size: 20px; line-height: 38px;">DOM 和 JS 对象无法获取</li>
+<li style="font-size: 20px; line-height: 38px;">Ajax请求发送不出去</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">只要协议、域名、端口有任何一个不同，都被当作是不同的域，这就是所谓“跨域”。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">虽然同源策略带来了安全上的保证，但是实际业务中，跨域的场景实在是太多了。如果仅仅因为跨域就导致资源无法互相读写，那么我们现在看到的许多互联网功能都将原地歇菜。之所以没歇菜，是因为网络策略有其灵活性，我们可以通过一些方式来绕过同源策略、达到通信目的。</p>
+</div><div class="cl-preview-section"><h2 id="跨域解决方案" style="font-size: 30px;">跨域解决方案</h2>
+</div><div class="cl-preview-section"><h3 id="jsonp">JSONP</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">由于js调用跨域文件是被允许的。只要我们在远程服务器上设法把数据装进js格式的文件里，就可以供客户端调用和进一步处理。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这个思路的指导下，人们挖掘出了 JSONP。JSONP 的一个要点就是允许用户传递一个callback参数给服务端，然后服务端返回数据时会将这个callback参数作为函数名来包裹住JSON数据，这样客户端就可以随意定制自己的函数来自动处理返回数据了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">举个?，我在 HTML 里面去调用一个服务端的 callback 函数：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>html<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>body<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>script type<span class="token operator">=</span><span class="token string">"text/javascript"</span><span class="token operator">&gt;</span>
+            <span class="token comment">// callback是存在服务端的</span>
+            <span class="token keyword">function</span> <span class="token function">callback</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+        <span class="token comment">// 这里引入服务端代码</span>
+        <span class="token operator">&lt;</span>script src<span class="token operator">=</span><span class="token string">"http://www.imooc.com/jsonp.shtml"</span> type<span class="token operator">=</span><span class="token string">"text/javascript"</span> charset<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>body<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>html<span class="token operator">&gt;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">然后在 <a href="http://www.imooc.com/jsonp.shtml">http://www.imooc.com/jsonp.shtml</a> （注意它是个虚拟链接，作示例用，大家不要贴到浏览器访问哈，估计是404），这个链接请求的服务端代码可以是这样写的：</p>
+</div><div class="cl-preview-section"><pre class="  language-java"><code class="prism  language-java"><span class="token comment">/**
+ * jsonp 测试
+ * @return
+ */</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"jsonp"</span><span class="token punctuation">,</span>method<span class="token operator">=</span>RequestMethod<span class="token punctuation">.</span>GET<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@ResponseBody</span>
+<span class="token keyword">public</span> String <span class="token function">Jsonp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"callback('我是目标字符串');"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这段代码是用 JAVA 写的，各位不必看懂 JAVA，只需要关注到它 return 的是个什么东西：</p>
+</div><div class="cl-preview-section"><pre class="  language-java"><code class="prism  language-java"><span class="token keyword">return</span> <span class="token string">"callback('我是目标字符串');"</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">没错， return 的就是一个对 callback 的调用！ 因此 JSONP 方案，大家只需要记住两个角色、两件事情：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;">浏览器脚本——<strong>定义</strong>：定义 callback，callback内是读取数据的逻辑</li>
+<li style="font-size: 20px; line-height: 38px;">服务端——<strong>调用</strong>：输出对 callback 的调用，把目标数据作为入参传给 callback</li>
+</ol>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如此一来，就可以成功地把 {message:“success”} 这个跨域的信息写入目标文件里啦。</p>
+</div><div class="cl-preview-section"><h3 id="cors">CORS</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">CORS是一个W3C标准，全称是"跨域资源共享"（Cross-origin resource sharing）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">它允许浏览器向不同源的服务器，发出XMLHttpRequest请求。虽然需要浏览器和服务器同时支持，但目前来看，除了低版本 IE 外，基本所有浏览器都支持该功能。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">CORS的通信过程，实际上不需要什么代码层面的配合与改动，由浏览器自动实现。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">对于开发者来说，CORS通信与同源的通信没有差别，至少代码上是一样的。浏览器一旦发现AJAX请求跨域，就会自动添加一些<strong>附加的头信息、追加必要的请求</strong>，但用户不会有感觉。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">浏览器的行为是通用的、自动化的。因此能否实现 CORS 的关键，其实在于服务器是否对此提供支持。我们下面从过程来理解一下浏览器和服务器在 CORS 上的合作机制：</p>
+</div><div class="cl-preview-section"><h4 id="简单请求对应的-cors-行为" style="font-size: 26px;">简单请求对应的 CORS 行为</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">浏览器会把请求分为简单请求和非简单请求，对于这两种请求，CORS 的处理过程是不同的，我们先来看简单请求：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">请求方式为HEAD、POST 或者 GET</li>
+<li style="font-size: 20px; line-height: 38px;">http头信息不超出以下字段：Accept、Accept-Language 、 Content-Language、 Last-Event-ID、 Content-Type(限于三个值：application/x-www-form-urlencoded、multipart/form-data、text/plain)</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">满足这两个条件的，就是简单请求。对于简单请求，对于简单请求，浏览器直接发出CORS请求。具体来说，就是在头信息之中，增加一个Origin字段：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">Origin<span class="token punctuation">:</span> http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>imooc<span class="token punctuation">.</span>com
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">Origin字段用来说明，本次请求来自哪个源（协议 + 域名 + 端口）。服务器根据这个值，决定是否同意这次请求。服务器处理的结果，分为两种情况：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">不同意： 如果Origin指定的源，不在许可范围内，服务器会返回一个正常的HTTP回应；浏览器发现，这个回应的头信息没有包含Access-Control-Allow-Origin字段，就知道出错了，从而抛出一个错误，被 XMLHttpRequest 的 onerror 回调函数捕获。</li>
+<li style="font-size: 20px; line-height: 38px;">同意：如果Origin指定的域名在许可范围内，服务器返回的响应，会多出这个关键的头信息字段：</li>
+</ul>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">Access<span class="token operator">-</span>Control<span class="token operator">-</span>Allow<span class="token operator">-</span>Origin<span class="token punctuation">:</span> http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>imooc<span class="token punctuation">.</span>com
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个字段用于说明服务器接纳哪些域名。它的值要么是请求时Origin字段的值，要么是一个*——表示接受任意域名的请求。</p>
+</div><div class="cl-preview-section"><h4 id="复杂请求对应的-cors-行为" style="font-size: 26px;">复杂请求对应的 CORS 行为</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">有一些请求对服务器有着特殊的要求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求（preflight）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个 preflight 的作用在于，确认当前网页所在的域名是否在服务器的许可名单之中、明确可以使用的 HTTP 请求方法和头信息字段。只有在这个请求返回成功的情况下，浏览器才会发出正式的请求。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这样做的目的是为了避免“无用功”。要知道，一般来说，正式请求要携带一些信息，它体积可能比较大。如果我们背着这么大一个包袱到了服务端那边，却发现对方根本不接受你，那岂不是白费力气了嘛。所以说，发送正式请求前先“预检”，就跟结婚之前要先订婚一样，是一个必要的确认动作。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">注："预检"请求用的请求方法是OPTIONS，这也是一个小小的考点。</p>
+</div><div class="cl-preview-section"><h4 id="cors-和-jsonp-的对比" style="font-size: 26px;">CORS 和 JSONP 的对比</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">CORS 的优势，往往是相对于 JSONP 来说的：JSONP只支持GET请求，而CORS支持所有类型的HTTP请求。但相应地，JSONP在低版本 IE 上也可以畅通无阻，CORS 就没有这么好的兼容性了。</p>
+</div><div class="cl-preview-section"><h3 id="section"></h3>
+</div><div class="cl-preview-section"><h3 id="postmessage跨域">postMessage跨域</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个 API 从 H5 开始支持，通过注册监听信息的Message事件、调用发送信息的postMessage方法，我们可以实现跨窗口通信。</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">从广义上讲，一个窗口可以获得对另一个窗口的引用（比如 <code>targetWindow = window.opener</code>），然后在窗口上调用 <code>targetWindow.postMessage()</code> 方法分发一个  <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MessageEvent"><code>MessageEvent</code></a> 消息。接收消息的窗口可以根据需要自由<a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/Events">处理此事件</a>。传递给 window.postMessage() 的参数（比如 message ）将<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage#The_dispatched_event">通过消息事件对象暴露给接收消息的窗口</a>。</p>
+</blockquote>
+</div><div class="cl-preview-section"><h4 id="发送信息的postmessage方法" style="font-size: 26px;">发送信息的postMessage方法</h4>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">otherWindow<span class="token punctuation">.</span><span class="token function">postMessage</span><span class="token punctuation">(</span>message<span class="token punctuation">,</span> targetOrigin<span class="token punctuation">,</span> <span class="token punctuation">[</span>transfer<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里otherWindow是对目标窗口的引用；message是要发送的消息；targetOrigin是限定消息接受范围，一般是字符串或者URI，星号 * 则意味着不限制。</p>
+</div><div class="cl-preview-section"><h4 id="接受信息的message事件" style="font-size: 26px;">接受信息的message事件</h4>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> <span class="token function-variable function">onmessage</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> data <span class="token operator">=</span> event<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+  <span class="token keyword">var</span> origin <span class="token operator">=</span> event<span class="token punctuation">.</span>origin<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> window<span class="token punctuation">.</span>addEventListener <span class="token operator">!=</span> <span class="token string">'undefined'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'message'</span><span class="token punctuation">,</span>onmessage<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> window<span class="token punctuation">.</span>attachEvent <span class="token operator">!=</span> <span class="token string">'undefined'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    window<span class="token punctuation">.</span><span class="token function">attachEvent</span><span class="token punctuation">(</span><span class="token string">'onmessage'</span><span class="token punctuation">,</span> onmessage<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><h4 id="流程演示" style="font-size: 26px;">流程演示</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">下面我们通过一个例子来理解这个过程：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">a页面（<a href="http://www.imooc.com/b.html%EF%BC%89%E4%B8%AD%E5%AF%B9%E6%B6%88%E6%81%AF%E6%8E%A5%E5%8F%97%E5%92%8C%E6%B4%BE%E5%8F%91%E7%9A%84%E5%A4%84%E7%90%86%EF%BC%9A">http://www.imooc.com/b.html）中对消息接受和派发的处理：</a></p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token comment">// a页面</span>
+<span class="token operator">&lt;</span>iframe id<span class="token operator">=</span><span class="token string">"iframe"</span> src<span class="token operator">=</span><span class="token string">"http://www.imooc.com/b.html"</span> style<span class="token operator">=</span><span class="token string">"display:none;"</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>iframe<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>       
+    <span class="token keyword">var</span> iframe <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'iframe'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    iframe<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+            name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token comment">// a 页面向 b 页面派发消息</span>
+        iframe<span class="token punctuation">.</span>contentWindow<span class="token punctuation">.</span><span class="token function">postMessage</span><span class="token punctuation">(</span>JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'http://www.neal.cn'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// a 页面接受 b 页面的消息</span>
+   window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"message"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span> event <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'data from b is'</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+   <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">b页面（<a href="http://www.imooc.com/b.html%EF%BC%89%E5%AF%B9%E6%B6%88%E6%81%AF%E6%8E%A5%E5%8F%97%E5%92%8C%E6%B4%BE%E5%8F%91%E7%9A%84%E5%A4%84%E7%90%86%EF%BC%9A">http://www.imooc.com/b.html）对消息接受和派发的处理：</a></p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+    <span class="token comment">// 接收 a 页面的数据</span>
+    window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'message'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'data from a is'</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+
+        <span class="token keyword">var</span> data <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// 派发数据到 a 页面</span>
+            window<span class="token punctuation">.</span>parent<span class="token punctuation">.</span><span class="token function">postMessage</span><span class="token punctuation">(</span>JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'http://www.imooc.com'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre>
+</div><div class="cl-preview-section"><h2 id="小结" style="font-size: 30px;">小结</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">关于跨域的解决方案，其实还有很多，比如 iframe（个人不推荐，如果有兴趣可以了解下）、cookie 跨域或者反向代理跨域等等。但是原则上，各位需要优先掌握本节提及的这几种思路。还是那句话，回答跨域问题，不要想着剑走偏锋，中规中矩是最妥帖的。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/2126">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            41 真正理解 HTTPS
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/2131">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            43 重点布局方案（上）
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img2.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

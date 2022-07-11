@@ -1,0 +1,238 @@
+<html><head><meta charset="utf-8"><title>25 图解浏览器渲染引擎工作原理-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        25 图解浏览器渲染引擎工作原理
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-26 14:40:39
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img4.sycdn.imooc.com/5eba88e80001cae906400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">老骥伏枥，志在千里； 烈士暮年，壮心不已。 ——曹操<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">本节我们介绍浏览器渲染引擎的运作机制。</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">Tips: 这块知识非常容易出问答题/作为性能优化面试题的切入点，大家需要引起重视。</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">​</p>
+</div><div class="cl-preview-section"><h2 id="渲染引擎工作流解析" style="font-size: 30px;">渲染引擎工作流解析</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">通过前面几节的学习，大家现在已经知道，浏览器的渲染引擎承载着把静态资源转换为可视化界面的任务。前面咱们已经明确了这样的转换关系：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba8a370001156813220256.png" data-original="//img1.sycdn.imooc.com/5eba8a370001156813220256.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">中间这个“渲染引擎处理”目前对大家来说仍然是一个黑盒。我们把这个黑盒拆开，会看到它其实包含了以下几个具体流程：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba8a2e0001c87011440168.png" data-original="//img1.sycdn.imooc.com/5eba8a2e0001c87011440168.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">整体来看，这五个过程分别完成了以下任务：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>1. HTML解析</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这一步浏览器对HTML文档进行解析，并在解析 HTML 的过程中发出了页面渲染所需的各种外部资源请求。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>2. CSS解析</strong><br>
+浏览器将识别并加载所有的 CSS 样式信息。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>3. 样式与结构合并</strong><br>
+将样式信息和文档结构合并，最终生成页面 render 树（:after :before 这样的伪元素会在这个环节被构建到 DOM 树中）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>4. 布局阶段</strong><br>
+页面中所有元素的相对位置信息，大小等信息均在这一步得到计算。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>5. 页面绘制</strong><br>
+在这一步中浏览器会根据我们前面处理出来的结果，把每一个页面图层转换为像素，并对所有的媒体文件进行解码。<br>
+<br><br>
+这五个步骤可以说是每一步都很关键，每一步都不白干，每一步都有一个阶段性产物作为收获。这些产物是我们理解渲染过程的重要抓手：</p>
+</div><div class="cl-preview-section"><h2 id="阶段性产物分析" style="font-size: 30px;">阶段性产物分析</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这五个流程分别对应了以下五个产物：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">DOM树</li>
+<li style="font-size: 20px; line-height: 38px;">CSSOM树</li>
+<li style="font-size: 20px; line-height: 38px;">渲染树</li>
+<li style="font-size: 20px; line-height: 38px;">盒模型</li>
+<li style="font-size: 20px; line-height: 38px;">目标界面</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">认识产物的目的是为了能够更好地掌握创造产物的过程。产物是具体的，因此咱们此处的讲解也应该是具体的。下面我就带大家来观摩一个渲染引擎的工作实例：</p>
+</div><div class="cl-preview-section"><h4 id="html解析-——-dom树" style="font-size: 26px;">HTML解析 —— DOM树</h4>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>html lang<span class="token operator">=</span><span class="token string">"en"</span><span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>head<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>meta charset<span class="token operator">=</span><span class="token string">"UTF-8"</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>meta name<span class="token operator">=</span><span class="token string">"viewport"</span> content<span class="token operator">=</span><span class="token string">"width=device-width, initial-scale=1.0"</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>meta http<span class="token operator">-</span>equiv<span class="token operator">=</span><span class="token string">"X-UA-Compatible"</span> content<span class="token operator">=</span><span class="token string">"ie=edge"</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>title<span class="token operator">&gt;</span>前端面试体系专栏<span class="token operator">&lt;</span><span class="token operator">/</span>title<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>style<span class="token operator">&gt;</span>
+    body <span class="token punctuation">{</span>
+      font<span class="token operator">-</span>size<span class="token punctuation">:</span> 20px；
+    <span class="token punctuation">}</span>
+    div <span class="token punctuation">{</span>
+      width<span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
+      height<span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    span <span class="token punctuation">{</span>
+      color<span class="token punctuation">:</span> #<span class="token number">000</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    p <span class="token punctuation">{</span>
+      display<span class="token punctuation">:</span> none
+    <span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>head<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>body<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box1"</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>span<span class="token operator">&gt;</span>我在盒子<span class="token number">1</span>号里<span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box2"</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>span<span class="token operator">&gt;</span>我在盒子<span class="token number">2</span>号里<span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span>你看不见我<span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>body<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>html<span class="token operator">&gt;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">楼上我们给出的是一段非常简单的 HTML。相信对大家来说，阅读 HTML 不是什么难事。不过对浏览器来说，这可不是什么美差——浏览器不能够直接理解 HTML，它首先会把它转化成自己能理解的 DOM 树：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba8a21000128ba10240768.png" data-original="//img1.sycdn.imooc.com/5eba8a21000128ba10240768.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">CSS 解析 —— CSSOM 树</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">一样的道理，浏览器也是没法直接理解 CSS 代码的，需要把它处理成自己能理解的 CSSOM 树——注意，虽然我们编写 CSS 代码时不像 HTML 代码一样表现出明显的嵌套关系，<strong>但是</strong> <strong>CSSOM 也是具有树结构的</strong>。这是因为在样式计算的过程中，浏览器总是从适用于该节点的最通用规则开始（例如 div 节点是 body 元素的子项，则应用所有 body 样式），一层一层递归细化出具体的样式。这个由通用到具体的细化关系，我们也可以用树结构来描述：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba8a0e0001fb2f10240768.jpg" data-original="//img1.sycdn.imooc.com/5eba8a0e0001fb2f10240768.jpg" alt="图片描述"></p>
+</div><div class="cl-preview-section"><h4 id="dom树与cssom树“合体”-——渲染树" style="font-size: 26px;">DOM树与CSSOM树“合体” ——渲染树</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">当 DOM 树和 CSSOM 树都解析完毕后，它们就会被结合在一起，构建出 Render Tree（渲染树）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">值得注意的是，渲染树的特点是它**只包含渲染网页所需的节点。**所以在构建渲染树的过程中，除了“结合”之外，浏览器还做了一些关键的小动作，这些小动作可能作为考点出现：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">step1： 从 DOM 树的根节点开始遍历，筛选出所有<strong>可见</strong>的节点；</li>
+<li style="font-size: 20px; line-height: 38px;">step2：仅针对可见节点，为其匹配 CSSOM 中的 CSS 规则；</li>
+<li style="font-size: 20px; line-height: 38px;">step3：发射可见节点（连同其内容和计算的样式）。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">经过这么一顿操作之后，渲染树就到手了：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba8a010001abe510240768.jpg" data-original="//img1.sycdn.imooc.com/5eba8a010001abe510240768.jpg" alt="图片描述"></p>
+</div><div class="cl-preview-section"><h4 id="布局盒子模型" style="font-size: 26px;">布局盒子模型</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">经过咱们不断地构建、修修剪剪，和“树”之间的故事，算是告一段落了。接下来咱们以手里这棵渲染树作为依据，进入布局阶段了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">到现在为止，我们已经掌握了需要渲染的所有节点之间的结构关系及其样式信息。但是我们还不知道它们在渲染时，到底应该出现在浏览器视口的哪个位置上、占据多大的空间——计算这些信息，就是布局阶段要做的事情。浏览器对渲染树进行遍历，将元素间嵌套关系以盒子模型的形式写入文档流：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba89f90001d99610240768.jpg" data-original="//img1.sycdn.imooc.com/5eba89f90001d99610240768.jpg" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">盒模型在布局过程中会计算出元素确切的大小和定位。计算完毕后，相应的信息被写回渲染树上，就形成了“布局渲染树”。同时，每一个元素盒子也都携带着自身的样式信息，作为后续绘制的依据。</p>
+</div><div class="cl-preview-section"><h4 id="目标界面" style="font-size: 26px;">目标界面</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家注意，走到现在这一步，我们浏览器的视窗内实际上还是啥也没展示出来的状态。咱们上述的渲染树也好，盒模型也好，它们都乖乖地躺在内存世界里，悄无声息。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">布局阶段结束后，浏览器终于拿到了它绘制页面所需要的所有信息。此时它会将渲染树上的每一个节点转换成我们肉眼可见的像素，最终将页面呈现在我们面前，这个过程就是“绘制”。绘制完成后，目标界面也就在你眼前了：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eba89ec0001134813760496.png" data-original="//img1.sycdn.imooc.com/5eba89ec0001134813760496.png" alt="图片描述"></p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1948">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            24 概览与预备知识——让”黑盒“不再神秘
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1957">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            26 命题难点深入挖掘—重绘与重排
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img2.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

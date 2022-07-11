@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function timer() {
+        document.write("1");
+
+        window.requestAnimationFrame(timer);
+      }
+      window.requestAnimationFrame(timer);
+      // timer();
+      //setInterval(timer)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,393 @@
+<html><head><meta charset="utf-8"><title>18 ES2015+考点集中解析-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        18 ES2015+考点集中解析
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-26 15:01:59
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img3.sycdn.imooc.com/5e9d801c000105dd06400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">天才就是这样，终身努力，便成天才。——门捷列夫<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">本节我们将通过小节形式的知识点串讲，对 ES6 中剩余的面试高频考点做逐一排查和梳理，意在帮助大家查漏补缺。在理解难度上，本节比上节更小，但知识点具备一定的琐碎度，因此同样不容忽视。</p>
+</div><div class="cl-preview-section"><h2 id="对象与数组的解构" style="font-size: 30px;">对象与数组的解构</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">解构是 ES6 提供给我们的一种新的提取数据的模式，这种模式能够帮助我们从对象或数组里有针对性地拿到我们想要的数值。</p>
+</div><div class="cl-preview-section"><h3 id="数组的解构">数组的解构</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在解构数组时，我们是以元素的位置为匹配条件来提取我们想要的数据的。举个例子：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">[</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">把这段代码丢进控制台里跑一跑，你会发现a、b、c分别被赋予了数组第0、1、2个索引位的值：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e9d80e700012d7904560560.png" data-original="//img1.sycdn.imooc.com/5e9d80e700012d7904560560.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">“一个萝卜一个坑”，数组里的0、1、2索引位的元素值，精准地被映射到了左侧的第0、1、2个变量里去，这就是数组解构的工作模式。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们还可以通过给左侧变量数组设置空占位的方式，实现对数组中某几个元素的精准提取：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">[</span>a<span class="token punctuation">,</span><span class="token punctuation">,</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">通过把中间位留空，我们可以顺利地把数组第一位和最后一位的值赋给 a、c 两个变量：<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e9d813700015d2c04580362.png" data-original="//img1.sycdn.imooc.com/5e9d813700015d2c04580362.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><h3 id="对象的解构">对象的解构</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">对象解构比数组结构稍微复杂一些，也更显强大。在解构对象时，我们是以属性的名称为匹配条件，来提取我们想要的数据的。举个例子，我们现在定义一个对象：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> stu <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'Bob'</span><span class="token punctuation">,</span>
+  age<span class="token punctuation">:</span> <span class="token number">24</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">假如我们想要解构它的两个自有属性，就可以这么干：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> name<span class="token punctuation">,</span> age <span class="token punctuation">}</span> <span class="token operator">=</span> stu
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如此一来，我们就得到了 name 和 age 两个和 stu 平级的变量：<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e9d81930001e31b05380400.png" data-original="//img1.sycdn.imooc.com/5e9d81930001e31b05380400.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">注意，对象解构严格以属性名作为定位依据，所以说咱们就算调换了 name 和 age 的位置，结果也是没差的：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> age<span class="token punctuation">,</span> name <span class="token punctuation">}</span> <span class="token operator">=</span> stu
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>考点点拨：如何提取高度嵌套的对象里的指定属性？</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">有时我们会遇到一些嵌套程度非常深的对象：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> school <span class="token operator">=</span> <span class="token punctuation">{</span>
+   classes<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      stu<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+         name<span class="token punctuation">:</span> <span class="token string">'Bob'</span><span class="token punctuation">,</span>
+         age<span class="token punctuation">:</span> <span class="token number">24</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">像此处的 name  这个变量，嵌套了足足四层，此时如果我们仍然尝试老方法来提取它：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> name <span class="token punctuation">}</span> <span class="token operator">=</span> school
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">显然是不奏效的，因为 school 这个对象本身是没有 name 这个属性的，name 位于 school 对象的“儿子的儿子”对象里面。要想把 name 提取出来，一种比较笨的方法是逐层解构：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> classes <span class="token punctuation">}</span> <span class="token operator">=</span> school
+<span class="token keyword">const</span> <span class="token punctuation">{</span> stu <span class="token punctuation">}</span> <span class="token operator">=</span> classes
+<span class="token keyword">const</span> <span class="token punctuation">{</span> name <span class="token punctuation">}</span> <span class="token operator">=</span> stu
+
+name <span class="token comment">// 'Bob'</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">但是还有一种更标准的做法，我们可以用一行代码来解决这个问题：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> classes<span class="token punctuation">:</span> <span class="token punctuation">{</span> stu<span class="token punctuation">:</span> <span class="token punctuation">{</span> name <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">=</span> school
+       
+name <span class="token comment">// 'Bob'</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">没错，我们可以在解构出来的变量名右侧，通过冒号+{目标属性名}这种形式，进一步解构它，一直解构到我们拿到目标数据为止。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>考点点拨： 解构同时重命名</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如果你接到的需求是给 name 起个新名字，采取 属性名：新变量名 这种形式就好：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> classes<span class="token punctuation">:</span> <span class="token punctuation">{</span> stu<span class="token punctuation">:</span> <span class="token punctuation">{</span> name<span class="token punctuation">:</span> newName <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">=</span> school
+
+newName <span class="token comment">// 'Bob'</span>
+</code></pre>
+</div><div class="cl-preview-section"><h2 id="一言难尽的“...”" style="font-size: 30px;">一言难尽的“…”</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">"…"相信大家已经非常熟悉了，它是 ES6 中一个应用非常广泛的运算符——扩展运算符。这个符号需要引起大家的警惕，因为不管你用得再多，你可能都很难说是真正地了解它，因为它不止一面，不信你瞅瞅：</p>
+</div><div class="cl-preview-section"><h3 id="扩展运算">扩展运算</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这是大家最熟悉的一面了。扩展运算在对象和数组中有着不同的表现：</p>
+</div><div class="cl-preview-section"><h4 id="对象扩展运算" style="font-size: 26px;">对象扩展运算</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">对象中的扩展运算符(…)用于取出参数对象中的所有可遍历属性，拷贝到当前对象之中。举个例子：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> me <span class="token operator">=</span> <span class="token punctuation">{</span> 
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  age<span class="token punctuation">:</span> <span class="token number">24</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> meCopy <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token operator">...</span>me <span class="token punctuation">}</span>
+
+meCopy <span class="token comment">// {name: "xiuyan", age: 24}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里的 …me 其实就等价于下面这种写法：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> me<span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><h4 id="数组扩展运算" style="font-size: 26px;">数组扩展运算</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在数组中，扩展运算可以将一个数组转为用逗号分隔的参数序列。举个例子：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">[</span><span class="token string">'haha'</span><span class="token punctuation">,</span> <span class="token string">'hehe'</span><span class="token punctuation">,</span> <span class="token string">'xixi'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// haha hehe xixi</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">再举个例子：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">mutiple</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> x<span class="token operator">*</span>y
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token function">mutiple</span><span class="token punctuation">(</span><span class="token operator">...</span>arr<span class="token punctuation">)</span> <span class="token comment">// 6</span>
+</code></pre>
+</div><div class="cl-preview-section"><h4 id="考点点拨：合并两个数组" style="font-size: 26px;">考点点拨：合并两个数组</h4>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+<span class="token keyword">const</span> arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">]</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">问如何把两个数组合并到一个数组里去。这套题可能有很多种解题姿势，但是最好看的一种姿势莫过于用我们的扩展符：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> newArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>arr1<span class="token punctuation">,</span> <span class="token operator">...</span>arr2<span class="token punctuation">]</span>
+</code></pre>
+</div><div class="cl-preview-section"><h3 id="rest-参数">rest 参数</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">上面我们为大家梳理了各位相对更为熟悉的一些扩展符的操作。但是扩展符还有它的另一面，当它被用在函数形参上时，<strong>它还可以把一个分离的参数序列整合成一个数组</strong>：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">mutiple</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> val <span class="token keyword">of</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    result <span class="token operator">*=</span> val<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">mutiple</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">// 24</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这个例子里，我们传入 mutiple 的是四个分离的参数，但是如果你在 mutiple 函数里尝试输出 args 的值，你会发现它是一个数组：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">mutiple</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">mutiple</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">// [1, 2, 3, 4]</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这就是 … 运算符的又一层威力了，它可以把函数的多个入参收敛进一个数组里。这一点经常被我们用于获取函数的多余参数，或者像上面这样处理函数参数个数不确定的情况。</p>
+</div><div class="cl-preview-section"><h2 id="类数组的转换" style="font-size: 30px;">类数组的转换</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里我要敲下黑板哈，类数组是本节的重中之重。如果你记性很差，学完了这满满一节只能记住一个考点，那我求你记住类数组。别问为啥，问就是会考！<br>
+先来看看啥是类数组对象，ECMA-262对它的定义是：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;">它必须是一个对象</li>
+<li style="font-size: 20px; line-height: 38px;">它有 length 属性</li>
+</ol>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">按照这个标准，只要有 length 属性的对象就是类数组对象：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> book <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'how to read a book'</span><span class="token punctuation">,</span>
+  age<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+  length<span class="token punctuation">:</span> <span class="token number">300</span> 
+<span class="token punctuation">}</span> <span class="token comment">// 这是一个类数组对象</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">注意，这里很多同学可能还看过另一个版本的解释：</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">类数组对象是指拥有一个 length 属性和若干索引属性的对象</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">按照这个标准，好像必须得这样才是类数组对象：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> book <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token number">0</span><span class="token punctuation">:</span> <span class="token string">'how to read a book'</span><span class="token punctuation">,</span>
+  <span class="token number">1</span><span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+  length<span class="token punctuation">:</span> <span class="token number">2</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">其实通常，类似数组的对象也有一些具有整数索引名的属性，不过这并非定义的要求。因此上面两个 book，都可以认为是类数组的对象。<br>
+不过大家也不必纠结太多，在类数组的考察上死扣定义的面试官几乎没有。类数组这里需要给大家点拨的一个高频考点是<strong>类数组的转换</strong>。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">考点点拨： 如何把类数组对象转换为真正的数组？<br>
+<strong>命题形式</strong>：大概率以编码题形式出现。<br>
+<strong>真题解析</strong>：将如下的类数组对象转换为数组，你能想到哪些方法？</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> arrayLike <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">:</span> <span class="token string">'Bob'</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">:</span> <span class="token string">'Lucy'</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">:</span> <span class="token string">'Daisy'</span><span class="token punctuation">,</span> length<span class="token punctuation">:</span> <span class="token number">3</span> <span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这道题期望大家能答出下面 3 种思路：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">Array原型上的slice方法—— 这个方法如果不传参数的话会返回原数组的一个拷贝，因此可以用此方法转换类数组到数组：</li>
+</ul>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> arr <span class="token operator">=</span> Array<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>slice<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arrayLike<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">Array.from方法——这是 ES6 新增的一个数组方法，专门用来把类数组转为数组：</li>
+</ul>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> arr <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token keyword">from</span><span class="token punctuation">(</span>arrayLike<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">扩展运算符——"…"也可以把类数组对象转换为数组，前提是这个类数组对象上部署了遍历器接口。在这个例子中，arrayLike 没有部署遍历器接口，所以这条路走不通。但一些对象，比如函数内部的 arguments 变量（它也是类数组对象），就满足条件，可以用这种方法来转换：</li>
+</ul>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">demo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'转换后的 arguments 对象：'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token operator">...</span>arguments<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span> 
+
+<span class="token function">demo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">// 转换后的 arguments 对象：[1, 2, 3, 4]</span>
+</code></pre>
+</div><div class="cl-preview-section"><h2 id="模板语法与字符串处理" style="font-size: 30px;">模板语法与字符串处理</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">ES6 中的字符串也是一个不可忽视的考点，因为 ES6 针对字符串做了不少突破性的改造。其中最激动人心的，要数“模板语法”了。</p>
+</div><div class="cl-preview-section"><h3 id="模板语法">模板语法</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家知道，在 ES6 问世以前，我们拼接字符串是一件挺麻烦的事情：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'xiuyan'</span>   
+<span class="token keyword">var</span> career <span class="token operator">=</span> <span class="token string">'coder'</span> 
+<span class="token keyword">var</span> hobby <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'coding'</span><span class="token punctuation">,</span> <span class="token string">'writing'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">var</span> finalString <span class="token operator">=</span> <span class="token string">'my name is '</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">', I work as a '</span> <span class="token operator">+</span> career <span class="token operator">+</span> <span class="token string">', I love '</span> <span class="token operator">+</span> hobby<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">' and '</span> <span class="token operator">+</span> hobby<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">仅仅几个变量，我们写了这么多加号，还要时刻小心里面的空格和标点符号有没有跟错地方。但是有了模板字符串，拼接难度直线下降：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'xiuyan'</span>   
+<span class="token keyword">var</span> career <span class="token operator">=</span> <span class="token string">'coder'</span> 
+<span class="token keyword">var</span> hobby <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'coding'</span><span class="token punctuation">,</span> <span class="token string">'writing'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">var</span> finalString <span class="token operator">=</span> <span class="token template-string"><span class="token string">`my name is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">, I work as a </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>career<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> I love </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>hobby<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> and </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>hobby<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们发现字符串不仅好拼了，也更易读了，代码整体的质量都变高了。这就是模板字符串的第一个福利——允许我们用${}这样简单的方式嵌入变量。但这还不是问题的关键，模板字符串的关键优势有两个：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">在模板字符串中，空格、缩进、换行都会被保留</li>
+<li style="font-size: 20px; line-height: 38px;">模板字符串完全支持“运算”式的表达式，你可以在${}里完成一些计算</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">基于第一点，我们可以在模板字符串里无障碍地直接写 html 代码：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">let</span> list <span class="token operator">=</span> <span class="token template-string"><span class="token string">`
+	&lt;ul&gt;
+		&lt;li&gt;列表项1&lt;/li&gt;
+		&lt;li&gt;列表项2&lt;/li&gt;
+	&lt;/ul&gt;
+`</span></span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 顺利输出，不存在报错</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">基于第二点，我们完全可以把一些简单的计算和调用丢进 ${} 来做，非常方便：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">add</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> finalString <span class="token operator">=</span> <span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>a<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> + </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>b<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> = </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>a<span class="token operator">+</span>b<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>finalString<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment">// 输出 '1 + 2 = 3'</span>
+</code></pre>
+</div><div class="cl-preview-section"><h3 id="更强的方法">更强的方法</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">除了模板语法外， ES6中还新增了一系列的字符串方法用于提升我们的开发效率，大家日后做实际编码题的时候可能会用到。这里我们提取其中常用的部分，总结如下：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;"><strong>存在性判定</strong>：在过去，当我们想判断一个字符/字符串是否在某字符串中时，只能用 indexOf &gt; -1 来做。现在 ES6 提供了三个方法：includes、startsWith、endsWith，它们都会返回一个布尔值来告诉你是否存在。
+<ul>
+<li style="font-size: 20px; line-height: 38px;"><strong>includes</strong>：判断字符串与子串的包含关系：</li>
+</ul>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> son <span class="token operator">=</span> <span class="token string">'haha'</span> 
+<span class="token keyword">const</span> father <span class="token operator">=</span> <span class="token string">'xixi haha hehe'</span>
+
+father<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>son<span class="token punctuation">)</span> <span class="token comment">// true</span>
+</code></pre>
+<ul>
+<li style="font-size: 20px; line-height: 38px;"><strong>startsWith</strong>：判断字符串是否以某个/某串字符开头：</li>
+</ul>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> father <span class="token operator">=</span> <span class="token string">'xixi haha hehe'</span>
+
+father<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">'haha'</span><span class="token punctuation">)</span> <span class="token comment">// false</span>
+father<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">'xixi'</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+</code></pre>
+<ul>
+<li style="font-size: 20px; line-height: 38px;"><strong>endsWith</strong>：判断字符串是否以某个/某串字符结尾：</li>
+</ul>
+<pre class=" language-js"><code class="prism  language-js">  <span class="token keyword">const</span> father <span class="token operator">=</span> <span class="token string">'xixi haha hehe'</span>
+
+  father<span class="token punctuation">.</span><span class="token function">endsWith</span><span class="token punctuation">(</span><span class="token string">'hehe'</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+</code></pre>
+</li>
+<li style="font-size: 20px; line-height: 38px;"><strong>自动重复</strong>： 我们可以使用 repeat 方法 来使同一个字符串输出多次（被连续复制多次）：</li>
+</ul>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> sourceCode <span class="token operator">=</span> <span class="token string">'repeat for 3 times;'</span>
+<span class="token keyword">const</span> repeated <span class="token operator">=</span> sourceCode<span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> 
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>repeated<span class="token punctuation">)</span> <span class="token comment">// repeat for 3 times;repeat for 3 times;repeat for 3 times;</span>
+</code></pre>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1794">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            17 变量提升与暂时性死区
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1841">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            19 DOM 基本功
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img2.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

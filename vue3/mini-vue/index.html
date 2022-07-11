@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./core/renderer/index.js"></script>
+    <script src="./core/reactivity/index.js"></script>
+    <script>
+        // 1.通过h函数来创建一个vnode
+        const vnode = h('div', { class: 'style' }, [
+            h('h2', null, '我是h2标题'),
+            h('button', {
+                onClick: () => {
+                    console.log(1)
+                }
+            }, '+1')
+        ])
+
+        // 2.通过mount函数, 将vnode挂载到div#app上
+        const app = document.querySelector('#app')
+        mount(vnode, app)
+
+        // 3.创建新的vnode
+        setTimeout(() => {
+            const newVnode = h('div', { name: 'zhangsan' }, [
+                h('span', null, '我是更新后的元素')
+            ])
+            patch(vnode, newVnode)
+        }, 2000)
+
+
+    </script>
+</body>
+
+</html>

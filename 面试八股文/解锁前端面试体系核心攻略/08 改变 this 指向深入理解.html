@@ -1,0 +1,312 @@
+<html><head><meta charset="utf-8"><title>08 改变 this 指向、深入理解 call/apply/bind 的原理-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        08 改变 this 指向、深入理解 call/apply/bind 的原理
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-08-10 14:48:08
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img3.sycdn.imooc.com/5e6d13300001157e06400480.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">天才免不了有障碍，因为障碍会创造天才。——罗曼·罗兰<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在上文中，我们翻来覆去讲的，都是“多数情况下”，this 遵循的指向机制。在另外一些情况下 this 是不遵循这个机制的。改变 this 的指向，我们主要有两条路：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;">
+<p style="font-size: 20px; line-height: 38px;">通过改变书写代码的方式做到（比如上一节提到的箭头函数）。</p>
+</li>
+<li style="font-size: 20px; line-height: 38px;">
+<p style="font-size: 20px; line-height: 38px;">显式地调用一些方法来帮忙。</p>
+</li>
+</ol>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">两条路都是命题热点。其中第一条路，因为比较简单，我们就先拿它开刀：</p>
+</div><div class="cl-preview-section"><h2 id="改变书写代码的方式，进而改变-this-的指向" style="font-size: 30px;">改变书写代码的方式，进而改变 this 的指向</h2>
+</div><div class="cl-preview-section"><h4 id="唱反调的箭头函数" style="font-size: 26px;">唱反调的箭头函数</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">箭头函数我们在上文已经讲过。在本节再强调一下（因为确实是个非常热门的考点，重复 1w 次也不过分）：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">1</span>
+
+<span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span>
+  a<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token comment">// 声明位置</span>
+  showA<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 调用位置</span>
+obj<span class="token punctuation">.</span><span class="token function">showA</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 1</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">当我们将普通函数改写为箭头函数时，箭头函数的 this 会在书写阶段（即声明位置）就绑定到它父作用域的 this 上。无论后续我们如何调用它，都无法再为它指定目标对象 —— 因为箭头函数的 this 指向是静态的，“一次便是一生”。</p>
+</div><div class="cl-preview-section"><h4 id="构造函数里的-this" style="font-size: 26px;">构造函数里的 this</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">当我们使用构造函数去 new 一个实例的时候：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> person <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">'xiuyan'</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">构造函数里面的 this 会绑定到我们 new 出来的这个对象上：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e6d146e00017ab306360162.png" data-original="//img1.sycdn.imooc.com/5e6d146e00017ab306360162.png" alt="图片描述"><br>
+​</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">​</p>
+</div><div class="cl-preview-section"><h2 id="显式地调用一些方法来帮忙" style="font-size: 30px;">显式地调用一些方法来帮忙</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">改变 this 指向，我们常用的是 call、 apply 和 bind 方法。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">考虑到实际开发中我们改变 this 指向的场景非常多，所以这三种方法的使用在面试中考察的频率也比较高。最常见的考法，是问询三种方法的<strong>使用及区别</strong>。但很多时候，为了能够进一步试探你对 this 相关概念理解和掌握的深度， 面试官会考察你 call、apply 和 bind 的<strong>实现机制</strong>，甚至可能会要求你手写代码。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">因此，针对 call、 apply 和 bind，我们不仅要会用、会辨析，更要对其原理知根知底。接下来，我们将这三种方法的考察方式汇聚到两道题里面，大家若能掌握这两个问题，就可以做到举一反三，知一解百。</p>
+</div><div class="cl-preview-section"><h3 id="基本问答题：call、apply-和-bind-是干嘛的？如何使用？它们之间有哪些区别？">基本问答题：call、apply 和 bind 是干嘛的？如何使用？它们之间有哪些区别？</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">解析：这里我给大家画了一张思维导图：<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e6d146400017bea20360246.png" data-original="//img1.sycdn.imooc.com/5e6d146400017bea20360246.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">结合这张图来说明，会清楚得多：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">call、apply 和 bind，都是用来<strong>改变函数的 this 指向</strong>的。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">call、apply 和 bind 之间的区别比较大，前者在改变 this 指向的同时，也会把目标函数给执行掉；后者则只负责改造 this，不作任何执行操作。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">call 和 apply 之间的区别，则体现在对入参的要求上。前者只需要将目标函数的入参逐个传入即可，后者则希望入参以数组形式被传入。</p>
+</div><div class="cl-preview-section"><h3 id="进阶编码题：模拟实现一个-callapplybind-方法">进阶编码题：模拟实现一个 call/apply/bind 方法</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这三种方法在实现层面上非常相似，我们以 call 方法的实现为例，带大家深入理解一下这类方法的模拟思路：</p>
+</div><div class="cl-preview-section"><h3 id="call-方法的模拟">call 方法的模拟</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在实现 call 方法之前，我们先来看一个 call 的调用示范：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">showName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+showName<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// xiuyan</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">结合 call 表现出的特性，我们首先至少能想到以下两点：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">call 是可以被所有的函数继承的，所以 call 方法应该被定义在 Function.prototype 上</li>
+<li style="font-size: 20px; line-height: 38px;">call 方法做了两件事：</li>
+</ul>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;">改变 this 的指向，将 this 绑到第一个入参指定的的对象上去；</li>
+<li style="font-size: 20px; line-height: 38px;">根据输入的参数，执行函数。</li>
+</ol>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">结合这两点，我们一步一步来实现 call 方法。首先，<strong>改变 this 的指向</strong>：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">showName 在 call 方法调用后，表现得就像是 me 这个对象的一个方法一样。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">所以我们最直接的一个联想是，如果能把  showName 直接塞进 me 对象里就好了，像这样：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  showName<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+me<span class="token punctuation">.</span><span class="token function">showName</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">但是这样做有一个问题，因为在 call 方法里，me 是一个入参：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">showName<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// xiuyan</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">用户在传入 me 这个对象的时候， 想做的仅仅是让 call 把 showName 里的 this 给改掉，而不想给 me 对象新增一个 showName 方法。所以说我们在执行完 me.showName 之后，还要记得把它给删掉。遵循这个思路，我们来模拟一下 call 方法（注意看注释）：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">Function<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">myCall</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// step1: 把函数挂到目标对象上（这里的 this 就是我们要改造的的那个函数）</span>
+    context<span class="token punctuation">.</span>func <span class="token operator">=</span> <span class="token keyword">this</span>
+    <span class="token comment">// step2: 执行函数</span>
+    context<span class="token punctuation">.</span><span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// step3: 删除 step1 中挂到目标对象上的函数，把目标对象”完璧归赵”</span>
+    <span class="token keyword">delete</span> context<span class="token punctuation">.</span>func
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">有兴趣的同学，可以测试一下我们的 myCall:</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">showName<span class="token punctuation">.</span><span class="token function">myCall</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// xiuyan</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在我们这个例子里，myCall 的执行结果结果与 call 无差，撒花～～</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">到这里，我们已经实现了 “<strong>改变 this 的指向</strong>” 这个功能点。现在我们的 myCall 还需要<strong>具备读取函数入参的能力</strong>，类比于 call 的这种调用形式：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'Chris'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">showFullName</span><span class="token punctuation">(</span>surName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>surName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+showFullName<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>me<span class="token punctuation">,</span> <span class="token string">'Lee'</span><span class="token punctuation">)</span> <span class="token comment">// Chris Lee</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">读取函数入参，具体来说其实是读取 call 方法的第二个到最后一个入参。要做到这一点，我们可以借助数组的扩展符（注意阅读注释，如果对 ‘…’ 这个符号感到陌生，需要补习一下 <a href="http://es6.ruanyifeng.com/#docs/array#%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6">ES6 中扩展运算符相关的知识</a>）：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token comment">// '...'这个扩展运算符可以帮助我们把一系列的入参变为数组</span>
+<span class="token keyword">function</span> <span class="token function">readArr</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">readArr</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">// [1,2,3]</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们把这个逻辑用到我们的 myCall 方法里：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">Function<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">myCall</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'入参是'</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">就能通过 args 这个数组拿到我们想要的入参了。把 args 数组代表的目标入参重新展开，传入目标方法里，就大功告成了：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">Function<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">myCall</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// step1: 把函数挂到目标对象上（这里的 this 就是我们要改造的的那个函数）</span>
+    context<span class="token punctuation">.</span>func <span class="token operator">=</span> <span class="token keyword">this</span>
+    <span class="token comment">// step2: 执行函数，利用扩展运算符将数组展开</span>
+    context<span class="token punctuation">.</span><span class="token function">func</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span>
+    <span class="token comment">// step3: 删除 step1 中挂到目标对象上的函数，把目标对象”完璧归赵”</span>
+    <span class="token keyword">delete</span> context<span class="token punctuation">.</span>func
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">现在我们来测试一下功能完备的 myCall 方法：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">Function<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">myCall</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// step1: 把函数挂到目标对象上（这里的 this 就是我们要改造的的那个函数）</span>
+    context<span class="token punctuation">.</span>func <span class="token operator">=</span> <span class="token keyword">this</span>
+    <span class="token comment">// step2: 执行函数，利用扩展运算符将数组展开</span>
+    context<span class="token punctuation">.</span><span class="token function">func</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span>
+    <span class="token comment">// step3: 删除 step1 中挂到目标对象上的函数，把目标对象”完璧归赵”</span>
+    <span class="token keyword">delete</span> context<span class="token punctuation">.</span>func
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'Chris'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">showFullName</span><span class="token punctuation">(</span>surName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>surName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+showFullName<span class="token punctuation">.</span><span class="token function">myCall</span><span class="token punctuation">(</span>me<span class="token punctuation">,</span> <span class="token string">'Lee'</span><span class="token punctuation">)</span> <span class="token comment">// Chris Lee</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">结果与 call 方法无差！</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">以上，我们就成功模拟了一个 call 方法出来。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">基于这个最基本的 call 思路，大家还可以为这个方法作能力扩充：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">比如如果我们第一个参数传了 null 怎么办？是不是可以默认给它指到 window 去？函数如果是有返回值的话怎么办？是不是新开一个 result 变量存储一下这个值，最后 return 出来就可以了？等等等等 —— 这些都是小事儿。当面试官问你 “如何模拟 call 方法的实现的时候”，他最想听的其实就楼上这两个核心功能点的实现思路，其它的，都是锦上添花～</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">基于对 call 方法的理解，写出一个 apply 方法（更改读取参数的形式） 和 bind 方法（延迟目标函数执行的时机）不是什么难事，只需要大家在上面这段代码的基础上作改造即可。（前提是你对 apply 方法和 bind 方法的特性和用法要心知肚明～）。</p>
+</div><div class="cl-preview-section"><h2 id="课后作业" style="font-size: 30px;">课后作业</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">独立实现一个自己的 myApply 和 myBind 方法。（可以参考上面的思路，也可以放飞自我，自由发挥～）</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里鼓励大家在评论区贴出自己的答案，更鼓励各位一起来 review 评论区的代码。博取众长，相信各位最后一定能从他人的代码中汲取到不少养分～</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1617">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            07 this 基本指向原则解析
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1619">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            09 JS 更进一步：执行上下文与调用栈
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img2.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

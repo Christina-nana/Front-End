@@ -1,0 +1,284 @@
+<html><head><meta charset="utf-8"><title>03 闭包—探索词法作用域模型-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        03 闭包—探索词法作用域模型
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-13 09:57:11
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img1.sycdn.imooc.com/5e5c815e0001238a06400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">没有智慧的头脑，就像没有蜡烛的灯笼。——托尔斯泰<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们说过，作用域本质是一套规则。如果说上一节，我们是把这“规则”的内容，从头到尾给大家梳理清楚了。那么这节，我们要探讨的就是这“规则”的成因。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">本节为相对较为高阶的内容，由各位同学根据自己当前情况选学。如果同学目前处在入门 / 初级阶段，没有晋级大厂 / 中高级工程师的强愿望，那么建议在有限的时间里，优先阅读下一篇《闭包的应用与真题集中解析》，时间投入回报比会更高。</p>
+</div><div class="cl-preview-section"><h2 id="词法作用域和动态作用域" style="font-size: 30px;">词法作用域和动态作用域</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">相信很多同学可能看到标题已经懵了哈 —— 作用域就作用域，“词法”、“动态” 这些陌生的前缀是啥玩意儿？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">事实上，当我们在 JavaScript 语言的范畴里讨论“作用域”这个概念的时候，确实不需要区分它是“词法”还是“动态”，因为我们 <strong>JS 的作用域遵循的就是词法作用域模型</strong>。当面试官抛出“词法作用域 ”这个概念的时候，完全不用慌，它指的就是你最最熟悉的 JS 作用域。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">但是站在语言的层面来看，作用域其实有两种主要的工作模型：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">词法作用域：也称为静态作用域。这是最普遍的一种作用域模型，也是我们学习的重点</li>
+<li style="font-size: 20px; line-height: 38px;">动态作用域：相对“冷门”，但确实有一些语言采纳的是动态作用域，如：Bash 脚本、Perl 等</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">想要理解词法作用域本身，我们就不得不从 JS 的框框里跳出来，把它和它的对立面“动态作用域 ”放在一起来看。为了使两者的概念更加直观，我们直接来看一段代码：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'xiuyan'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">showName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">changeName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span><span class="token punctuation">;</span>
+    <span class="token function">showName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">changeName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这是一段 JS 代码，基于我们上节对 JS 作用域的学习，不难答出它的运行结果是 ‘xiuyan’。这是因为 JS 采取的就是词法（静态）作用域，这段代码运行过程中，经历了这样的变量定位流程：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">在 showName 函数的函数作用域内查找是否有局部变量 name</li>
+<li style="font-size: 20px; line-height: 38px;">发现没找到，于是根据<strong>书写的位置</strong>，查找上层作用域（全局作用域），找到了 name 的值是 xiuyan，所以结果会打印 xiuyan。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">此时它的作用域关系示意如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5c84250001bbfd08260628.png" data-original="//img1.sycdn.imooc.com/5e5c84250001bbfd08260628.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">运行时的作用域链关系如下：<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e5c842e0001c49106720238.png" data-original="//img1.sycdn.imooc.com/5e5c842e0001c49106720238.png" alt="图片描述"><br>
+这里我们作用域的划分，是在<strong>书写的过程中（例子中也就是在函数定义的时候，块作用域同理是在代码块定义的时候），根据你把它写在哪个位置来决定的</strong>。像这样划分出来的作用域，遵循的就是词法作用域模型。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">那什么是动态作用域呢？动态作用域机制下，同样的一段代码，会发生下面的事情：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">在 showName 函数的函数作用域内查找是否有局部变量 name</li>
+<li style="font-size: 20px; line-height: 38px;">发现没找到，于是<strong>沿着函数调用栈、在调用了 showName 的地方</strong>继续找 name。这时大家看看它找到哪去了？是不是就找到 changeName 里去了？ 刚好，changeName 里有一个 name，于是这个 name 就会被引用到 showName 里去。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">此时它的作用域链关系示意如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5c8436000115f206320240.png" data-original="//img1.sycdn.imooc.com/5e5c8436000115f206320240.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">所以如果是动态作用域，那么这段代码运行的结果就会是 ‘BigBear’ 了～</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们总结一下，词法作用域和动态作用域的区别其实在于<strong>划分作用域的时机：</strong></p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">词法作用域： 在代码书写的时候完成划分，作用域链沿着它<strong>定义的位置</strong>往外延伸</li>
+<li style="font-size: 20px; line-height: 38px;">动态作用域： 在代码运行时完成划分，作用域链沿着它的<strong>调用栈</strong>往外延伸</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">（如果你对“调用栈”这个概念感到陌生或者不舒服，现在也不用着急，在《深入理解 JS 上下文和调用栈》这一节，我们会有更加深入和详细的解析。</p>
+</div><div class="cl-preview-section"><h2 id="修改词法作用域" style="font-size: 30px;">修改词法作用域</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在相对高阶的前端面试中，有时面试官会抛出这样的问题：如何“欺骗”词法作用域？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家不要被“欺骗”这个新奇的说法给唬到了，这里“欺骗”就是“改变”的意思。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">面试官询问你改变作用域的方法，一般不是真的希望你在写代码的时候去改变作用域规则（这样做往往需要付出性能的代价），而是在摸底，想知道你对词法作用域到底了解到了什么程度。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如何理解 “修改” 这个动作？JS 遵循词法作用域模型已成定局，难道我还能把它扳成动态作用域不成？别说，还真行。你 JS 不是只在书写阶段对作用域进行划分吗？那么我偏要在运行过程中把你划分好的作用域改掉 —— 到底是谁这么牛？我们请出 eval 和 with：</p>
+</div><div class="cl-preview-section"><h3 id="eval-对作用域的修改">eval 对作用域的修改</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">开头我们先来复习一下 eval 函数的用法：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">showName</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">eval</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'xiuyan'</span>
+<span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'var name = "BigBear"'</span>
+
+<span class="token function">showName</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token comment">// 输出 BigBear</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家知道，eval 函数的入参是一个字符串。当 eval 拿到一个字符串入参后，它会把这段字符串的内容当做一段 js 代码（不管它是不是一段 js 代码），插入自己被调用的那个位置。所以上面这个例子里，被 eval “改造” 过后的 showName 函数其实长这样了：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">showName</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">此时当我们尝试输出 name 的时候， 函数作用域内的 name 已经被 eval 传入的这行代码给修改掉了，所以作用域内 name 的值就从 ‘xiuyan’ 变成了 ‘BigBear’（eval 带来的改变如下图所示）。而这个改变确实只有在 eval (str) 这行代码被执行后才发生 ——eval 在运行时改变了作用域的内容，它成功地 “修改” 了词法作用域规则约束下在书写阶段就划分好的作用域。<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e5c844100013ed511000592.png" data-original="//img1.sycdn.imooc.com/5e5c844100013ed511000592.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><h3 id="with-对作用域的修改">with 对作用域的修改</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">with 对大家来说可能比 eval 要陌生一些。它的作用就是帮我们 “偷懒”，当我们不想重复地写一个对象名作为前缀的时候，with 可以帮到我们：</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  career<span class="token punctuation">:</span> <span class="token string">'coder'</span><span class="token punctuation">,</span>
+  hobbies<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'coding'</span><span class="token punctuation">,</span> <span class="token string">'footbal'</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 假如我们想输出对象 me 中的变量，没有 with 可能会这样做：</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">.</span>career<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">.</span>hobbies<span class="token punctuation">)</span>
+
+<span class="token comment">// 但 with 可以帮我们省去写前缀的时间</span>
+<span class="token keyword">with</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>career<span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>hobbies<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">没错， with 就是当我们希望去引用一个对象内的多个属性的时候，一个 “偷懒” 的办法。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">为什么说 with 可以 “改变” 词法作用域呢？我们再来看一个例子：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">changeName</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">with</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    name <span class="token operator">=</span> <span class="token string">'BigBear'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span><span class="token punctuation">,</span>
+  career<span class="token punctuation">:</span> <span class="token string">'coder'</span><span class="token punctuation">,</span>
+  hobbies<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'coding'</span><span class="token punctuation">,</span> <span class="token string">'footbal'</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> you <span class="token operator">=</span> <span class="token punctuation">{</span>
+  career<span class="token punctuation">:</span> <span class="token string">'product manager'</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">changeName</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span>
+<span class="token function">changeName</span><span class="token punctuation">(</span>you<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token comment">// 输出 'BigBear'</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们惊奇地发现，在执行了两次 changeName 后，竟然多出一个全局变量 name ！</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这其实就是 with 在 “捣鬼”。其实大家通过使用 with 的过程不难感受出来， with 做的事情其实就是<strong>凭空创建出了一个新的作用域</strong>。比如单说第一次执行 changeName 的过程，它是这样的：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5c844b0001de2311000598.png" data-original="//img1.sycdn.imooc.com/5e5c844b0001de2311000598.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们把 with 这种创建新作用域的能力代入到两次 changeName 的执行里，就不难理解为什么会多出一个全局 name 了。事情是这样的：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">第一次 changeName 调用， with 为 me 这个对象创建了一个新作用域，使得我们可以在这个作用域里直接访问 name、 career、hobbies 等对象属性。过程就是我们上面这张图所示。到这里都还没啥毛病。</li>
+<li style="font-size: 20px; line-height: 38px;">第二次 changeName 调用， with 为 you 这个对象也创建了一个新作用域，使得我们可以在这个作用域里直接访问 career 这个对象属性（如下图）。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5c84530001a9d411060584.png" data-original="//img1.sycdn.imooc.com/5e5c84530001a9d411060584.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">​     结果我们试图访问的竟然是 name —— 一个当前作用域里没有的变量。这时会发生什么？大家注意， with 对作用域的改变，仅仅在于 “创建” 这个动作。<strong>当这个作用域被创建出来之后，它的查询规则仍然遵循我们词法作用域的查询规则</strong>，所以它本能地 “探出头去”、去自己的上层作用域 —— 全局作用域查询 name 了，发现依然找不到（作用域链关系如下图）。<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e5c845c00019f3c09180304.png" data-original="//img1.sycdn.imooc.com/5e5c845c00019f3c09180304.png" alt="图片描述"><br>
+注意我们这时处于非严格模式下，非严格模式下，就算全局作用域里找不到 name，系统也会为你自动在全局作用域创建一个 name （这里如果感到不太理解的小伙伴，需要好好复习一下 JS 基础）。于是 name = ‘BigBear’ 就这么顺利地执行了，全局变量 name 横空出世～（过程如下图）</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5c84640001ba6b08480222.png" data-original="//img1.sycdn.imooc.com/5e5c84640001ba6b08480222.png" alt="图片描述"><br>
+一切水落石出。我们赶紧总结下 with 改变作用域的方式：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">with 会原地创建一个全新的作用域，这个作用域内的变量集合，其实就是传入 with 的目标对象的属性集合。</li>
+<li style="font-size: 20px; line-height: 38px;">因为 “创建” 这个动作，是在 with 代码实际已经被执行后发生的，所以这个新作用域确实是在运行时被添加的， with 因此也实现了对书写阶段就划分好的作用域进行修改。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>这里面需要注意的是，“改变” 仅仅是描述 “创建” 这个动作 —— 创建出来的这个新的作用域。因此它的作用域查询机制仍然是遵循词法作用域模型的。</strong></p>
+</div><div class="cl-preview-section"><h3 id="tips：不要用-with-和-eval-写代码">tips：不要用 with 和 eval 写代码</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家学到这里，要保持头脑清醒：我们这里提到 with 和 eval，仅仅是为了拓宽大家的知识面，确保大家在面试时能够言之有物、不会被问及盲区，而<strong>绝不是为了建议大家使用 with 和 eval</strong>。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">事实上， with 和 eval 因为其恼人的副作用（比如对语言性能的拖累、比如我们上面 “横空出世” 的全局变量等等），一直是我们 JS 程序员眼中的过街老鼠。实际编码中早就没人用了，我也极力推荐大家不要用。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在面试过程中，若面试官试图追问类似于 “请讲讲你在实际项目中对 with、 eval 的应用” 之类的问题，一率回答 “我不用 with 和 eval 写代码” 就可以了。不用担心追问，正常的面试官不会追问（不正常的面试官咱理他干啥？：））。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1610">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            02 闭包—从编译原理的角度理解作用域
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1614">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            04  闭包面试真题集中解析
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img4.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

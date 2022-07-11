@@ -1,0 +1,396 @@
+<html><head><meta charset="utf-8"><title>31 React基本功（二）——深入组件通信机制-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        31 React基本功（二）——深入组件通信机制
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-26 14:11:12
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img3.sycdn.imooc.com/5ecc72640001555606400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">散步促进我的思想。我的身体必须不断运动，脑筋才会开动起来。 —— 卢梭<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家知道，<strong>组件化、数据驱动、单向数据流是 React 的重要特性</strong>。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">涉及 React 基础层次的面试，“通信机制”这个话题，会是一个绝佳的切入点。通过考察候选人对通信机制的理解，可以帮助面试官确认非常多的信息：比如你对组件关系的理解是否全面，对单向数据流的原则认知是否到位，比如你对 Context API 是否了解、对 Event Bus 是否了解等等等等。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">简单来说——这是一道绝对的高频考题！</p>
+</div><div class="cl-preview-section"><h2 id="section" style="font-size: 30px;"></h2>
+</div><div class="cl-preview-section"><h2 id="图解-react-组件间关系" style="font-size: 30px;">图解 React 组件间关系</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在 React 世界里，组件间的关系基本可以由这三种来概括：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>父子关系（嵌套）</strong>：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ecc73e00001925309560614.png" data-original="//img1.sycdn.imooc.com/5ecc73e00001925309560614.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>兄弟关系（平行）</strong>：<br>
+<img class="" src="https://img1.sycdn.imooc.com/5ecc73b80001b51711080668.png" data-original="//img1.sycdn.imooc.com/5ecc73b80001b51711080668.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>深层嵌套关系（子子孙孙无穷尽也）</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ecc73ad000155ee10320634.png" data-original="//img1.sycdn.imooc.com/5ecc73ad000155ee10320634.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">​</p>
+</div><div class="cl-preview-section"><h2 id="父子组件通信" style="font-size: 30px;">父子组件通信</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这是最常见、也最好解决的一个通信场景：react的数据流是单向的，最常见的操作就是通过props由父组件向子组件传递数据。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">举个例子：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token operator">...</span><span class="token punctuation">(</span>省略基础依赖的 <span class="token keyword">import</span><span class="token punctuation">)</span>
+<span class="token keyword">import</span> Child <span class="token keyword">from</span> <span class="token string">'子组件的引用路径'</span>   
+
+<span class="token keyword">class</span> <span class="token class-name">Father</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 父组件具有“组件标题颜色”信息，需要带给子组件</span>
+      titleColor<span class="token punctuation">:</span> <span class="token string">'#fff'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function-variable function">changeColor</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 点击后，父子组件标题同时变更颜色</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        titleColor<span class="token punctuation">:</span> <span class="token string">'#000'</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+
+  <span class="token comment">// 渲染</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h1 style<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>color<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>titleColor<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>我是父标题<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>changeColor<span class="token punctuation">}</span><span class="token operator">&gt;</span>点我变色<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+        <span class="token comment">// 子组件中以 props 的形式传入和父组件同步的 titleColor</span>
+        <span class="token operator">&lt;</span>Child titleColor<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>titleColor<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">子组件中，可以通过 props 来拿到父组件的数据：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">class</span> <span class="token class-name">Child</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> titleColor <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>props
+    <span class="token comment">// 此处省略渲染细节</span>
+    <span class="token keyword">return</span> <span class="token operator">...</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><h3 id="子组件向父组件通信">子组件向父组件通信</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">由于 React 数据流是单向的，子组件没法直接向父组件抛出数据。不过，可以通过父组件向子组件传递一个函数形式的 props 来达到我们的目的：父组件将作用域为自身的函数传递给子组件，子组件在调用该函数时，把目标数据以函数入参的形式交到父组件手中即可。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">举个例子：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">父组件中将方法传入子组件：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token operator">...</span><span class="token punctuation">(</span>省略基础依赖的 <span class="token keyword">import</span><span class="token punctuation">)</span>
+<span class="token keyword">import</span> Child <span class="token keyword">from</span> <span class="token string">'子组件的引用路径'</span>   
+
+<span class="token keyword">class</span> <span class="token class-name">Father</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span><span class="token punctuation">{</span>
+  state <span class="token operator">=</span> <span class="token punctuation">{</span>
+    titleColor<span class="token punctuation">:</span> <span class="token string">'#fff'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  
+  <span class="token comment">// 父组件中存在一个允许自定义标题颜色的方法</span>
+  <span class="token function-variable function">changeColor</span> <span class="token operator">=</span> <span class="token punctuation">(</span>color<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      titleColor
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h1 style<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>color<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>titleColor<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>我是父标题<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>changeColor<span class="token punctuation">}</span><span class="token operator">&gt;</span>点我变色<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+        <span class="token comment">// 子组件中以 props 的形式收到父组件中的 changeColor 方法</span>
+        <span class="token operator">&lt;</span>Child changeColor<span class="token operator">=</span><span class="token punctuation">{</span>color <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span><span class="token function">changeColor</span><span class="token punctuation">(</span>color<span class="token punctuation">)</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">子组件在调用该函数时，把目标数据以函数入参的形式交到父组件手中：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">class</span> <span class="token class-name">Child</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span><span class="token punctuation">{</span>
+  <span class="token function">componentDidMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 调用父组件的方法</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span><span class="token function">changeColor</span><span class="token punctuation">(</span><span class="token string">'#000'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 此处省略渲染细节</span>
+    <span class="token keyword">return</span> <span class="token operator">...</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><h2 id="兄弟组件通信" style="font-size: 30px;">兄弟组件通信</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">兄弟组件乍一看没啥关联，但别忘了，它们有同一个爹。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">结合咱们上面的分析，爹可以把话带给儿子，儿子也可以把话带给爹。那么儿子A说给爹的话，爹也可以带给儿子B。如此一来，兄弟组件通信就不是啥问题了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们梳理一下这个过程的实现流程：在父组件中定义一个作用域是它自己的方法（这个事件用来修改某个特定的 state），以 props 的形式传递给儿子 A，同时把这个事件里涉及的 state 值，以 props 的形式传递给儿子 B。这样当我们在 A 中调用父组件的方法、修改这个目标 state 值后，会触发父组件的 state 更新，进而自然就会触发儿子 B 的 props 传值更新。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们用一个例子来理解一下这个过程：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">首先是父组件：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token operator">...</span><span class="token punctuation">(</span>省略基础依赖的 <span class="token keyword">import</span><span class="token punctuation">)</span>
+<span class="token keyword">import</span> ChildA <span class="token keyword">from</span> <span class="token string">'子组件A的引用路径'</span>   
+<span class="token keyword">import</span> ChildB <span class="token keyword">from</span> <span class="token string">'子组件B的引用路径'</span>   
+
+<span class="token keyword">class</span> <span class="token class-name">Father</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span><span class="token punctuation">{</span>
+  state <span class="token operator">=</span> <span class="token punctuation">{</span>
+    titleColor<span class="token punctuation">:</span> <span class="token string">'#fff'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  
+  <span class="token comment">// 父组件中存在一个允许自定义标题颜色的方法</span>
+  <span class="token function-variable function">changeColor</span> <span class="token operator">=</span> <span class="token punctuation">(</span>color<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      titleColor
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h1 style<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>color<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>titleColor<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>我是父标题<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>changeColor<span class="token punctuation">}</span><span class="token operator">&gt;</span>点我变色<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+        <span class="token comment">// 子组件A中以 props 的形式收到父组件中的 changeColor 方法</span>
+        <span class="token operator">&lt;</span>ChildA changeColor<span class="token operator">=</span><span class="token punctuation">{</span>color <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span><span class="token function">changeColor</span><span class="token punctuation">(</span>color<span class="token punctuation">)</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+        <span class="token comment">// 子组件B中以 props 的形式传入和父组件同步的 titleColor</span>
+        <span class="token operator">&lt;</span>ChildB titleColor<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>titleColor<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">子组件 A 中，触发父组件 state 的改变：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">class</span> <span class="token class-name">ChildA</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span><span class="token punctuation">{</span>
+  <span class="token function">componentDidMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 调用父组件的方法</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span><span class="token function">changeColor</span><span class="token punctuation">(</span><span class="token string">'#000'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 此处省略渲染细节</span>
+    <span class="token keyword">return</span> <span class="token operator">...</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">子组件 B 中，对应的 props 就会同步为父组件新的 state 值：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">class</span> <span class="token class-name">ChildB</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 这个值也更新了</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> titleColor <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>props
+    <span class="token comment">// 此处省略渲染细节</span>
+    <span class="token keyword">return</span> <span class="token operator">...</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><h2 id="深层嵌套的组件间通信" style="font-size: 30px;">深层嵌套的组件间通信</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在过去，涉及深层嵌套、或者说任意两个组件之间这样跨度较大的通信，我们一般是直接通过全局事件总线（Event Bus）或者引入 Redux 来解决。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不过随着 React16.3 版本的发布，在深层嵌套这个场景下，有了一个新的答案：<strong>使用 Context API。</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家注意，Context API 可不是随着 React16.3 的发布而出现的。事实上，React在很早就支持了context，只是官方并不推荐我们使用它：</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">The vast majority of applications do not need to use context.</p>
+<p style="font-size: 20px; line-height: 38px;">If you want your application to be stable, don’t use context. It is an experimental API and it is likely to break in future releases of React.</p>
+<p style="font-size: 20px; line-height: 38px;">(绝大多数应用程序不需要使用 context。如果你想让你的应用更稳定，不要使用context。因为这是一个实验性的API，在未来的React版本中可能会被更改。)</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">好消息是，从 React16.3 开始，Context API 得到了升级，不再作为不稳定的实验性能力存在。现在，我们可以放心地使用 Context API 了。</p>
+</div><div class="cl-preview-section"><h3 id="理解-context-api">理解 Context API</h3>
+</div><div class="cl-preview-section"><h4 id="context-api-是干嘛的？" style="font-size: 26px;">Context API 是干嘛的？</h4>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">Context 提供了一个无需为每层组件手动添加 props，就能在组件树间进行数据传递的方法。</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">一般来说，在 React 应用中，数据只能通过 props 属性自上而下传递。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">但当我们想要跨 N 个层级传递某个数据时，逐层传递就会变得非常繁琐，而且还会带来不必要的数据更新（比如说一些全局性质的数据，用户名、用户权限等）。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">Context 面向这类场景，提供了一种在组件之间共享此类值的方式，它允许我们不必显式地通过组件树的逐层传递 props。</p>
+</div><div class="cl-preview-section"><h4 id="context-的用法" style="font-size: 26px;">Context 的用法</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们直接通过一个实例来理解它的用法：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">现在我们立足 A 组件，想要把 A 的标题颜色信息传递给千里之外的 E 组件，它们的嵌套关系正如下图一样，深不可测：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ecc7399000155ee10320634.png" data-original="//img1.sycdn.imooc.com/5ecc7399000155ee10320634.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span><span class="token punctuation">{</span>
+  state <span class="token operator">=</span> <span class="token punctuation">{</span>
+    titleColor<span class="token punctuation">:</span> <span class="token string">'#fff'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+        <span class="token comment">// 省略 B 组件引入逻辑</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家脑补一下，如果是使用 props，那么我需要在 A 组件中把 titleColor 传给 B，然后 B 传 C、C 传 D、D 传 E…这种操作蠢极了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">现在有了 Context API，我不必去理会那些无聊的“中间商”只需要把注意力放在数据的源头组件和数据的接收方上就可以了：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">（注意源头组件（Provider）会接受一个 value 作为 props，这个值会修改你在创建 Context 时设定的默认值）</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token comment">// 用 React.createContext 可以为当前的 titleColor 创建一个 context（“#fff”为默认值）。</span>
+<span class="token comment">// React.createContext 方法会返回一个带有 Provider 和 Consumer 的对象。</span>
+<span class="token keyword">const</span> TitleColorContext <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createContext</span><span class="token punctuation">(</span><span class="token string">'#fff'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token comment">// 使用一个 Provider（提供者） 来将当前的 titleColor 传递给下面的组件树。</span>
+          <span class="token operator">&lt;</span>TitleColorContext<span class="token punctuation">.</span>Provider value<span class="token operator">=</span><span class="token string">"#000"</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+          <span class="token comment">// 省略 B 组件引入逻辑</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>TitleColorContext<span class="token punctuation">.</span>Provider<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>    
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">随后我们可以在 E 组件里去访问这个 Context（注意 Consumer 表示消费者，它接受一个 render props 作为唯一的 children。render props 是一个函数，这个函数会接收到 Context 传递的数据作为参数，并且需要返回一个组件），形式上类似这样：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token operator">&lt;</span>MyContext<span class="token punctuation">.</span>Consumer<span class="token operator">&gt;</span>
+  <span class="token punctuation">{</span>value <span class="token operator">=&gt;</span> <span class="token comment">/* 基于 context 值进行渲染*/</span><span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>MyContext<span class="token punctuation">.</span>Consumer<span class="token operator">&gt;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">对应到我们这个例子里，就是这样：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">class</span> <span class="token class-name">E</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">&lt;</span>TitleColorContext<span class="token punctuation">.</span>Consumer<span class="token operator">&gt;</span>
+      <span class="token punctuation">{</span>
+        <span class="token punctuation">(</span>titleColor<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+          <span class="token operator">&lt;</span>h1 style<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> color<span class="token punctuation">:</span> titleColor <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>
+                我是 E 标题
+            <span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>TitleColorContext<span class="token punctuation">.</span>Consumer<span class="token operator">&gt;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大功告成！</p>
+</div><div class="cl-preview-section"><h2 id="任意组件间通信" style="font-size: 30px;">任意组件间通信</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这种场景需要我们召唤 Event-Bus。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">关于 Event-Bus，用过它的同学会知道，这货简直是万金油。不夸张地说，它可以解决我们本文描述的所有场景下的通信问题。也正是因为它够强，一直是面试过程中的一个稳定热点。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不过，鉴于 Event-Bus 本身和 React 关系不大、同时更多地涉及了设计模式中的考点，我们后面会在“算法与设计模式”这一章为它单开小节来作介绍。在本章，我们仍然把篇幅留给 React。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1974">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            30 React基本功（一）——图解新旧生命周期
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/2011">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            32 React基本功（三）——命题思路点拨
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img1.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

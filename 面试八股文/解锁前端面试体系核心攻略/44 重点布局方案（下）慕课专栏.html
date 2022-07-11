@@ -1,0 +1,422 @@
+<html><head><meta charset="utf-8"><title>44 重点布局方案（下）-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        44 重点布局方案（下）
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-06-12 09:51:34
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img4.sycdn.imooc.com/5ee2db7a0001242f06400427.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">立志是事业的大门，工作是登门入室的的旅途。——巴斯德<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">上一节我们解决了一波关键的手写代码问题，本节我们会帮大家拆解一些具备一定理论性的 CSS 难点。大家不要背答案，记住大致的思路，面试时能够言之有物即可。</p>
+</div><div class="cl-preview-section"><h2 id="bfc-是什么？如何创造一个-bfc？" style="font-size: 30px;">BFC 是什么？如何创造一个 BFC？</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">来了来了，有区分度的问题来了！BFC 相关的理解，堪称大厂 CSS 面试必问，大家一定好好把握。</p>
+</div><div class="cl-preview-section"><h4 id="理解-bfc" style="font-size: 26px;">理解 BFC</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">首先来看第一个问题：BFC 是什么？大家注意，解释 BFC 的时候，最好不要尝试从定义的角度去解释它。因为它的定义非常难以说清楚，比如 MDN 上就是这样定义的：</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">块格式化上下文（Block Formatting Context，BFC） 是Web页面的可视化CSS渲染的一部分，是块盒子的布局过程发生的区域，也是浮动元素与其他元素交互的区域。</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">来，告诉我，看着这个定义，你能明白 BFC 是啥吗？不仅你整不明白，面试官也多半会被这一长串的术语搞得云里雾里的。不过安全起见我这里还是给出一个相对好懂一点的说法：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">BFC 就是一个<strong>作用范围</strong>。可以把它理解成是一个<strong>独立</strong>的容器。注意这个“独立”，它意味着这个作用范围和外界是毫不相关的。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在定义方面，有上面这句话就够了。不过大家要知道，我们前端是一个和工程结合得特别紧密的一个工种。解释这个问题，从定义下手不是个好思路，我们应该从<strong>特性</strong>下手。也就是说，<strong>直接去解释 BFC 能解决什么问题、能够用于什么场景</strong>。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">BFC 主要被用来解决以下常见的布局问题：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">清除浮动；</li>
+<li style="font-size: 20px; line-height: 38px;">阻止 margin 发生重叠；</li>
+<li style="font-size: 20px; line-height: 38px;">阻止元素被浮动的元素覆盖。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">接下来，我们会结合一系列的实例来认知 BFC 的这些能力。在此之前，我们先列举几个<strong>常见的创建 BFC 的方法</strong>：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">float 的值不是 none；</li>
+<li style="font-size: 20px; line-height: 38px;">position 的值不是 static 或者 relative；</li>
+<li style="font-size: 20px; line-height: 38px;">display 的值是 inline-block、table-cell、flex、table-caption 或者 inline-flex；</li>
+<li style="font-size: 20px; line-height: 38px;">overflow 的值不是 visible。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>注意</strong>：创建 BFC 的方法还有很多，这里是使用频率较高的几种。还是一样，大家不必追求数量哈。</p>
+</div><div class="cl-preview-section"><h4 id="bfc-清除浮动" style="font-size: 26px;">BFC 清除浮动</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">关于 BFC 清除浮动这一点，代码写起来没有什么难度，关键大家要理解：为什么 BFC 可以用来清除浮动。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们先来回顾一下元素浮动之后会带来什么效果：</p>
+</div><div class="cl-preview-section"><pre class=" language-html"><code class="prism  language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style language-css">
+  <span class="token selector"><span class="token class">.floatBox1</span> </span><span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+    <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+    <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token selector"><span class="token class">.floatBox2</span> </span><span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+    <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+    <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> yellow<span class="token punctuation">;</span>
+    <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>floatBox1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>floatBox2<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">楼上这段代码，我们浮动了两个盒子。大家可以尝试把浮动相关的代码先注释掉，先看看浮动前的样子，浮动前效果是这样的：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df280001f97921120504.png" data-original="//img1.sycdn.imooc.com/5ee2df280001f97921120504.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">浮动后：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df2f000142b821120290.png" data-original="//img1.sycdn.imooc.com/5ee2df2f000142b821120290.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">虽然现在有 Flex 大家基本都不怎么用浮动布局了，不过还是要清楚浮动布局应用的一个基本目的：它是为了改变应用了 float 的那些<strong>目标元素的布局方式</strong>。在这里，父元素的宽高也被间接地改变了，这是浮动布局的一个副作用。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">解决这个副作用，有一个非常成熟的方案叫做“清除浮动”。创建 BFC 就是清除浮动的一种方法。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们随机选取以上罗列的几种方法中的一种，这里我设置了 overflow 属性：</p>
+</div><div class="cl-preview-section"><pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> yellow<span class="token punctuation">;</span>
+    <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">成功创建了一个 BFC，此时效果如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df370001dd1221200260.png" data-original="//img1.sycdn.imooc.com/5ee2df370001dd1221200260.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们看到，在 BFC 的帮助下，我们既实现了两个子元素 <code>float: left</code> 的布局效果，又避免了对父元素的影响。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">那么回过头来看，为什么 BFC 可以解决浮动问题呢？答案就在 BFC 这个区域的<strong>独立</strong>特性上。因为独立，所以它要确保自己的作用范围不会对外界产生影响。此处我们把父元素创建为了一个 BFC，那么父元素就要保证自己的子元素不会跑出去给别人添麻烦，所以会自动把自己的宽高适应到能囊括子元素的程度。</p>
+</div><div class="cl-preview-section"><h4 id="bfc-解决重叠边距问题" style="font-size: 26px;">BFC 解决重叠边距问题</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们先来看看啥是外边距重叠：</p>
+</div><div class="cl-preview-section"><pre class=" language-html"><code class="prism  language-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>边距重叠测试<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style language-css">
+    <span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
+      <span class="token property">background-color</span><span class="token punctuation">:</span> yellow<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token selector"><span class="token class">.box1</span>,
+    <span class="token class">.box2</span> </span><span class="token punctuation">{</span>
+      <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+      <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+      <span class="token property">margin</span><span class="token punctuation">:</span> <span class="token number">20</span>px <span class="token number">0</span> <span class="token number">20</span>px <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token property">background-color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+      <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>我是盒子一号<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box2<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>我是盒子二号<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这段代码效果如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df4200011da921160512.png" data-original="//img1.sycdn.imooc.com/5ee2df4200011da921160512.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">乍一看好像没什么问题，可我们仔细看看两个盒子之间的外边距：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df4b0001d82211640550.png" data-original="//img1.sycdn.imooc.com/5ee2df4b0001d82211640550.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里我选中了二号元素，变色的部分是二号元素本身和其外边距的占地面积。我们可以看出，盒子一号和盒子二号虽然都设置了 20px 的外边距，但是实际展示的只有一个 20px 的外边距。这是一个非常正常的现象：在CSS当中，相邻的两个盒子的外边距会被结合成一个单独的外边距。这种合并外边距的方式就叫<strong>折叠。</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">那如果我想要的效果不是折叠，而是每一个元素的外边距都能实际的生效呢？这时候 BFC 又能派上用场了，我给两个盒子各创建一个父元素，然后让这个父元素是一个 BFC：</p>
+</div><div class="cl-preview-section"><pre class=" language-html"><code class="prism  language-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>边距重叠测试<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style language-css">
+    <span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
+      <span class="token property">background-color</span><span class="token punctuation">:</span> yellow<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token selector"><span class="token class">.box1</span>,
+    <span class="token class">.box2</span> </span><span class="token punctuation">{</span>
+      <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+      <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+      <span class="token property">margin</span><span class="token punctuation">:</span> <span class="token number">20</span>px <span class="token number">0</span> <span class="token number">20</span>px <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token property">background-color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+      <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token selector"><span class="token class">.box-container</span> </span><span class="token punctuation">{</span>
+      <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box-container<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>我是盒子一号<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box-container<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box2<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>我是盒子二号<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">效果就会变成这样：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df70000103e215860636.png" data-original="//img1.sycdn.imooc.com/5ee2df70000103e215860636.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">细心的同学会发现，此时不仅两个兄弟元素之间的外边距生效了，连子元素和父元素之间的外边距也生效了。这是因为早先父子元素间其实也存在边距重叠，也就是说边距重叠条件里的“相邻”不只是指兄弟元素之间的相邻关系，还包括了父子元素之间的相邻关系。通过把两个子元素放进两个不同的 BFC 里，利用 BFC “独立”的特性，可以使两个子元素的所有内容都被严严实实地包进各自的 BFC 中，避免与外界产生重叠的关系。</p>
+</div><div class="cl-preview-section"><h4 id="阻止元素被浮动的元素覆盖" style="font-size: 26px;">阻止元素被浮动的元素覆盖</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">CSS 中有一种常见的布局效果：两列布局，一列宽度固定，另一列自适应。实现这种效果，有一条路就是基于浮动来做。这里我给大家做个示范：</p>
+</div><div class="cl-preview-section"><pre class=" language-html"><code class="prism  language-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width=`, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>两列布局自适应<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style language-css">
+    <span class="token selector"><span class="token class">.floatBox1</span> </span><span class="token punctuation">{</span>
+      <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+      <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+      <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+      <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+      <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token selector"><span class="token class">.box2</span> </span><span class="token punctuation">{</span>
+      <span class="token property">height</span><span class="token punctuation">:</span><span class="token number">100%</span><span class="token punctuation">;</span>
+      <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+      <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>floatBox1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>我是被浮动的元素<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box2<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+        我没有被浮动，我是修言的两列布局测试小弟我没有被浮动，我是修言的两列布局测试小弟我没有被浮动，我是修言的两列布局测试小弟我没有被浮动，我是修言的两列布局测试小弟我没有被浮动，我是修言的两列布局测试小弟<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个例子对应的效果是这样的：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df7a00016b7b07680304.png" data-original="//img1.sycdn.imooc.com/5ee2df7a00016b7b07680304.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们看到，右边这列自适应确实是实现了，比如我如果拉伸浏览器窗口，它就会跟着变宽：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df830001286409260232.png" data-original="//img1.sycdn.imooc.com/5ee2df830001286409260232.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">但是“两列”却是个问题，左侧的盒子因为使用了浮动布局，它会脱离原有的文档流，“浮”在普通文档流的上方。这样一来，就遮盖了没有浮动的元素。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">B 元素被 A 元素覆盖，这意味着什么？这意味着 B 元素被外界影响了！一个 BFC 的基本修养是什么？是高度的独立性，不被外界的布局干扰。因此，要想解决覆盖问题，我们为 B 元素（这里就是蓝色盒子）创建一个 BFC：</p>
+</div><div class="cl-preview-section"><pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.box2</span> </span><span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span><span class="token number">100%</span><span class="token punctuation">;</span>
+  <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+  <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如此一来，浮动的红色盒子就再也不能拿我们具备 BFC 特性的蓝色盒子怎么样了：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df8c0001300809440270.png" data-original="//img1.sycdn.imooc.com/5ee2df8c0001300809440270.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><h2 id="谈谈你对-css-工程化的理解" style="font-size: 30px;">谈谈你对 CSS 工程化的理解</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">来了来了，有区分度的第二个问题来了。前端基本每个人都会写 CSS，可并不是每个人都了解 CSS 工程化。工程化相关问题，往往出现在二面/三面/各种项目面试中，考察候选人 CSS 相关实践的深度。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个问题的答案是灵活的，我这里给出普适性较强的几个方向。如果你对 CSS 工程化确实有过深入的实践，那么更建议你在这些方向的基础上，结合自己的项目经历进行扩充，切勿强记答案。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">首先，大家要清楚的是，CSS 工程化是为了解决哪些方面的问题：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;">宏观设计：CSS 代码如何组织、如何拆分、模块结构怎样设计？</li>
+<li style="font-size: 20px; line-height: 38px;">编码优化：怎样写出更好的 CSS？</li>
+<li style="font-size: 20px; line-height: 38px;">构建：如何处理我的 CSS，才能让它的打包结果最优？</li>
+<li style="font-size: 20px; line-height: 38px;">可维护性：代码写完了，如何最小化它后续的变更成本？如何确保任何一个同事都能轻松接手？</li>
+</ol>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家首先可以就这四个方面，回溯自己的 CSS 开发经历，看有没有可以匹配上其中某个方面的点。很多时候，你不是没有做过工程化，而是你不清楚自己做的事情就是工程化。如果实在没有，也没关系，我们至少有三个点是可以和面试官聊下去的：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">预处理器：Less、 Sass 等；</li>
+<li style="font-size: 20px; line-height: 38px;">重要的工程化插件： PostCss；</li>
+<li style="font-size: 20px; line-height: 38px;">Webpack loader 等  。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这三个方向都是时下比较流行的、普适性非常好的 CSS 工程化实践。基于这三个方向，可以衍生出一些具有典型意义的子问题，这里我们逐个来看：</p>
+</div><div class="cl-preview-section"><h4 id="预处理器：为什么要用预处理器？它的出现是为了解决什么问题？" style="font-size: 26px;">预处理器：为什么要用预处理器？它的出现是为了解决什么问题？</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">预处理器，其实就是 CSS 世界的“轮子”。大家如果是初识预处理器，你可以类比 JS 世界的 Vue、React来理解它。 预处理器支持我们写一种类似 CSS、但实际并不是 CSS 的语言，然后把它编译成 CSS 代码：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df9500016ef112620300.png" data-original="//img1.sycdn.imooc.com/5ee2df9500016ef112620300.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">为什么写 CSS 代码写得好好的，偏偏要转去写“类 CSS”呢？这个道理就和我们本来用 JS 也可以一把梭实现所有功能，但最后却一窝蜂跑去写 React 的 jsx 或者 Vue 的模板语法是一样的——为了爽！</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">要想知道有了预处理器有多爽，我们首先要知道的是传统 CSS 有多不爽。随着前端业务复杂度的提高，前端工程中对 CSS 提出了以下的诉求：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;">宏观设计上：我们希望能优化 CSS 文件的目录结构，对现有的 CSS 文件实现复用；</li>
+<li style="font-size: 20px; line-height: 38px;">编码优化上：我们希望能写出结构清晰、简明易懂的 CSS，需要它具有一目了然的嵌套层级关系，而不是无差别的一铺到底写法；我们希望它具有变量特征、计算能力、循环能力等等更强的可编程性，这样我们可以少写一些无用的代码；</li>
+<li style="font-size: 20px; line-height: 38px;">可维护性上：更强的可编程性意味着更优质的代码结构，实现复用意味着更简单的目录结构和更强的拓展能力，这两点如果能做到，自然会带来更强的可维护性。</li>
+</ol>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这三点是传统 CSS 所做不到的，也正是预处理器所解决掉的问题。预处理器五花八门，它们普遍会具备这样的特性：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">嵌套代码的能力，通过嵌套来反映不同 css 属性之间的层级关系 ；</li>
+<li style="font-size: 20px; line-height: 38px;">支持定义 css 变量；</li>
+<li style="font-size: 20px; line-height: 38px;">提供计算函数；</li>
+<li style="font-size: 20px; line-height: 38px;">允许对代码片段进行 extend 和 mixin；</li>
+<li style="font-size: 20px; line-height: 38px;">支持循环语句的使用；</li>
+<li style="font-size: 20px; line-height: 38px;">支持将 CSS 文件模块化，实现复用。</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">以上这些，大概率就是你在面试环节需要口头表述给面试官的全部。我这里基本是在给大家写答案了，安全起见，各位还是需要对市面上最常见的两种预处理器：Sass、Less 有所了解。不用你写多么复杂的项目，只需要你花上几个小时的时间，跟着 <a href="http://lesscss.cn/"> less 文档</a> 和 <a href="https://www.sass.hk/">sass 文档</a> 把关键的特性手动敲一遍，然后你再回来看我上面写的这些字，一定会有一种恍然大悟的感觉。</p>
+</div><div class="cl-preview-section"><h4 id="postcss：postcss-是如何工作的？我们在什么场景下会使用-postcss？" style="font-size: 26px;">PostCss：PostCss 是如何工作的？我们在什么场景下会使用 PostCss？</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">PostCss 仍然是一个对 CSS 进行解析和处理的工具，它会对 CSS 做这样的事情：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5ee2df9e0001fdcf12580304.png" data-original="//img1.sycdn.imooc.com/5ee2df9e0001fdcf12580304.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">它和预处理器的不同就在于，预处理器处理的是 类CSS，而 PostCss 处理的就是 CSS 本身。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">理解 PostCss，我们可以类比 JS 世界里的 Babel。大家知道，Babel 可以将高版本的 JS 代码转换为低版本的 JS 代码。PostCss 做的是类似的事情：它可以编译尚未被浏览器广泛支持的先进的 CSS 语法，还可以自动为一些需要额外兼容的语法增加前缀。更强的是，由于 PostCss 有着强大的插件机制，支持各种各样的扩展，极大地强化了 CSS 的能力。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">PostCss 在业务中的使用场景非常多，这里我列举几个最高频的：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">提高 CSS 代码的可读性：PostCss 其实可以做类似预处理器能做的工作；</li>
+<li style="font-size: 20px; line-height: 38px;">当我们的 CSS 代码需要适配低版本浏览器时，PostCss 的 <a href="https://github.com/postcss/autoprefixer">Autoprefixer</a> 插件可以帮助我们自动增加浏览器前缀；</li>
+<li style="font-size: 20px; line-height: 38px;">允许我们编写面向未来的 CSS：PostCss 能够帮助我们编译 CSS next 代码；</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">和预处理器一样，这里也建议大家在掌握面试所需的这些知识点之余，亲自去试用一下 <a href="https://www.postcss.com.cn/">PostCss</a>，相信你的记忆和理解都会更深一层。</p>
+</div><div class="cl-preview-section"><h4 id="webpack-能处理-css-吗？如何实现？" style="font-size: 26px;">Webpack 能处理 CSS 吗？如何实现？</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里有两个问题，我们一个一个来看：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">Webpack 能处理 CSS 吗？这个问题回答时要尽量严谨，我建议大家这样来答：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;"><strong>Webpack 在裸奔的状态下，是不能处理 CSS 的</strong>，Webpack 本身是一个面向 JavaScript 且只能处理 JavaScript 代码的模块化打包工具；</li>
+<li style="font-size: 20px; line-height: 38px;">Webpack 在 loader 的辅助下，是可以处理 CSS 的。</li>
+</ol>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如何用 Webpack 实现对 CSS 的处理？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家不要想太多，这个问题唯一的目的就是考察你到底有没有真的在综合性项目中用过 Webpack。这道题我们需要答出两个点：</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">
+<p style="font-size: 20px; line-height: 38px;">Webpack 中操作 CSS 需要使用的两个关键的 loader：css-loader 和 style-loader</p>
+</li>
+<li style="font-size: 20px; line-height: 38px;">
+<p style="font-size: 20px; line-height: 38px;">注意，答出“用什么”有时候可能还不够，面试官会怀疑你是不是在背答案，所以你还需要了解每个 loader 都做了什么事情：</p>
+</li>
+<li style="font-size: 20px; line-height: 38px;">
+<ul>
+<li style="font-size: 20px; line-height: 38px;">css-loader：导入 CSS 模块，对 CSS 代码进行编译处理；</li>
+<li style="font-size: 20px; line-height: 38px;">style-loader：创建style标签，把 CSS 内容写入标签。</li>
+</ul>
+</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在实际使用中，<strong>大家要切记 css-loader 的执行顺序一定要安排在 style-loader 的前面</strong>。因为只有完成了编译过程，才可以对 css 代码进行插入；若提前插入了未编译的代码，那么 webpack 是无法理解这坨东西的，它会无情报错。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/2131">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            43 重点布局方案（上）
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/2133">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            45 响应式布局原理与实践（上）
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img3.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

@@ -1,0 +1,327 @@
+<html><head><meta charset="utf-8"><title>04  闭包面试真题集中解析-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        04  闭包面试真题集中解析
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-03-03 12:20:46
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img4.sycdn.imooc.com/5e5c847c0001be1e06400359.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">不想当将军的士兵，不是好士兵。——拿破仑<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">经过了两个小节围绕知识点和原理的“厮杀”，相信大家都对闭包及作用域知识有了超出绝大部分竞争对手的理解。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在刚刚过去的讲解中，大家见到的许多示例、问题其实本身已经由面试题演化而来。即便如此，涉及闭包的面试题仍然存在不少值得提点的“变体”。本节我们就围绕闭包来“刷题”，针对面试过程中闭包这块主要的几条面试思路来逐个拆解。</p>
+</div><div class="cl-preview-section"><h2 id="“循环体与闭包”-系列" style="font-size: 30px;">“循环体与闭包” 系列</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">把闭包和循环体结合起来考察，是闭包最为经典的一种命题方式。通过简单的一道题，面试官可以问出他想听的许多东西。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们来看一个大家可能都已经非常非常熟悉的题目：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">问：上述代码输出结果是什么？（大家先自己脑内跑一下代码，记住自己的答案）</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">​</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如果你是刚入门的新手，你可能会给出这样的答案：</p>
+</div><div class="cl-preview-section"><pre><code>0 1 2 3 4 5
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">给出这样答案的同学，让我来猜猜你在想什么：for 循环逐个输出了 0-4 的 i 值， setTimeout 这个我好像在哪见过，但是印象不深了 / 在这儿好像也不重要 / 我没看清楚，干脆忽视它好了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">于是，你给出了上述答案～</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">不过如果你基础不错，对 setTimeout 函数的用法特性还有印象，那么不难给出这样的 “进化版” 答案：</p>
+</div><div class="cl-preview-section"><pre><code>5 0 1 2 3 4
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这部分同学是这样想的：for 循环逐个输出了 0-4 的 i 值，但 setTimeout 把输出推迟了，所以最后一行先执行了。这最后一行输出的就是 i 的终态（5），然后 1000ms 后，0-4 才会被逐个输出。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">但如果你既对 setTimeout 函数有了解，又有一定的面试经验（或者说充分吸收理解了我们前几节对闭包和作用域的讲解），相信你可以给出一个正确答案：</p>
+</div><div class="cl-preview-section"><pre><code>5 5 5 5 5 5
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">为什么是这个答案？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">最后一行的 console，大家都能看出来是 5；最后一行最先输出，大家也能理解（setTimeout 内的函数会被推迟执行）；关键是 for 循环里发生了什么，我们得来捋捋：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">for 循环里的 setTimeout 执行了 5 次，每次都会将这个函数的执行推迟 1000ms ：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家看这个函数，它自身的作用域里，是不是压根儿没有 i 这个变量？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">那么结合我们前面学过的作用域知识，要想输出 i，咱们是不是得去上层作用域找？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家想想，这个函数第一次被执行，也是 1000ms 以后的事情了，此时它试图向外、向上层作用域（这里就是全局作用域）去找一个叫 i 的变量。此时 for 循环早已执行完毕， i 也进入了尘埃落定的最终状态 ——5。所以 1000ms 后，当这个函数第一次真正被执行的时候，引用到的 i 值已经是 5 了。函数执行时整体的作用域状态示意如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5cb0a60001b44809000668.png" data-original="//img1.sycdn.imooc.com/5e5cb0a60001b44809000668.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">对应的作用域链关系如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5cb0b000018e0f06460304.png" data-original="//img1.sycdn.imooc.com/5e5cb0b000018e0f06460304.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">接下来持续四次，每隔 1000ms，都会有一个一模一样的 setTimeout 回调被执行，它试图输出的也都是这同一个全局的 i，所以说每一次输出的都是 5。</p>
+</div><div class="cl-preview-section"><h3 id="例题延伸：改造它的三种思路">例题延伸：改造它的三种思路</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">循环了五次，每次却都输出一个值，这显然是 bug 级别的输出效果。如果我们希望让 i 从 0 到 4 依次被输出，那么如何改造上面的写法，才可以达到我们的目的呢？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>第一种思路</strong>：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们可以把 setTimeout 函数的第三个参数利用起来。别忘了，setTimeout 从第三个入参位置开始往后，是可以传入无数个参数的。这些参数会作为回调函数的附加参数存在。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这里我们可以把每一轮循环里 i 的值，存进 setTimout 的第三个参数里：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>第二种思路：</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在 setTimeout 外面再套一层函数，利用这个外部函数的入参来缓存每一个循环中的 i 值：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> <span class="token function-variable function">output</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 这里的 i 被赋值给了 output 作用域内的变量 i</span>
+    <span class="token function">output</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>第三种思路</strong>：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">和第二种思路比较相似，同样是在 setTimeout 外面再套一层函数，只不过这个函数是一个<strong>立即执行函数</strong>。利用立即执行函数的入参来缓存每一个循环中的 i 值：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 这里的 i 被赋值给了立即执行函数作用域内的变量 j</span>
+    <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><h3 id="知一解百-——-说是真题，全是“变体”-：">知一解百 —— 说是真题，全是“变体” ：</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">上面这道题，还请各位引起重视，这是一道母题中的母题。如果能够真正理解这道题的命题用意，你会发现只要闭包和循环体凑一块儿了，全是这么个考察套路。下面，我们就用两道题来考考大家：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">（下面两道题目的输出结果是多少？ 为什么？ ）</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">test</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">var</span> num <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">var</span> i
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        num<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> num<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> test <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> num <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> num<span class="token operator">++</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+</div><div class="cl-preview-section"><h2 id="“复杂作用域”-系列" style="font-size: 30px;">“复杂作用域” 系列</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">看代码说结果、并追问候选人得出结论的思路，这是一种效率最高的闭包考察方式。这种命题方式主要有两个方向，一个方向是我们刚刚讲完的循环 &amp; 闭包问题，另一个方向就是“复杂作用域”。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">复杂作用域考题虽然高频，但是并不复杂。它的套路非常简单粗暴 —— 就是在一道题里面，尽可能地想办法给你折腾出一堆作用域（有时还会杂糅一些较为零碎的 JS 语法知识点），目的就是把你整懵。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">怎样才能不被整懵？这里刚好给大家引出一个做题技巧：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">回忆下我们之前学习闭包的过程，是不是基本每段代码，我都会给大家用 “方块套方块” 这种形式图示作用域？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>画图</strong> —— 这是避免被整懵的一个重要手段。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">做这类题的时候，最好是找面试官要张纸要根笔（要不到靠脑补也行，问题不大）。从被执行的那个函数看起，一层一层由内而外地把作用域全局图给画出来，然后<strong>看图说话！</strong></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">很多同学光听我这么说没啥感觉，我建议你试试，哪怕就试一次，<strong>你就会发现问题的复杂度其实可以变得很低很低</strong>。只要你的知识点本身没有硬伤（有硬伤就拐回去多复习几遍前两节的内容），画图 + 按图定位变量之后，把这类题做错对你来说会变得非常难。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们下面就通过一道真题来实践一下我们这个做题方法：</p>
+</div><div class="cl-preview-section"><h4 id="真题（例题）：" style="font-size: 26px;">真题（例题）：</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">step1: 读题</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">step2：画图（到了做题环节，大家该动手和我一起画啦～）</p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">分层：我们从内向外画。最内层，是一个匿名函数。匿名函数的外层，是 test 函数的作用域，再外层，就是全局作用域了，我们先把这个层级关系画出来：</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5cb0c10001704909220658.png" data-original="//img1.sycdn.imooc.com/5e5cb0c10001704909220658.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><ul>
+<li style="font-size: 20px; line-height: 38px;">找变量：这是这题的难点！全局变量里的 a =1 毫无疑问，最内层匿名函数里的 a 当前作用域不存在也毫无疑问；关键就是 test 函数里这个 a ，是啥情况？</li>
+</ul>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">​      要分析出 test 函数里 a 的值，大家至少有两个知识点不能虚：</p>
+</div><div class="cl-preview-section"><ol>
+<li style="font-size: 20px; line-height: 38px;"><strong>变量提升</strong>：test 函数中，a = 2 在先， var a = 3 在后。但是！别忘了，函数作用域内部也是存在变量提升的，这个 var 会被提到函数的顶部，所以 test 函数体其实等价于下面这种情况：</li>
+</ol>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment">// 声明 var 被提前</span>
+    <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><ol start="2">
+<li style="font-size: 20px; line-height: 38px;">作用域规则：结合我们 step1 里划分的层级和上一步分析出来的 test 函数中的变量情况，不难看出匿名函数实际拿到的 a 就是 test 作用域里的 a。那么这个 a 到底是 2 还是 3？这里需要大家牢记我们前面讲解中说过的一句话：</li>
+</ol>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">我们作用域的划分，是在<strong>书写的过程中，根据你把它写在哪个位置来决定的</strong>。像这样划分出来的作用域，遵循的就是词法作用域模型。</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">敲黑板！大家一定要对“书写”的时机敏感！这里我们匿名函数被定义的时候 a = 3 的赋值动作还没有发生（只有声明会被提前！），因此它拿到的 a 就是 2！</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们把我们分析出来的变量一个一个填进它们对应的地盘里：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5cb0cb00015eff08440666.png" data-original="//img1.sycdn.imooc.com/5e5cb0cb00015eff08440666.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">由此可以很清晰地捋出作用域链如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e5cb0d4000168f409280320.png" data-original="//img1.sycdn.imooc.com/5e5cb0d4000168f409280320.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大功告成！ 这题的答案 就是 2 ~~</p>
+</div><div class="cl-preview-section"><h4 id="真题（练习题）：" style="font-size: 26px;">真题（练习题）：</h4>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">下面段代码，会输出什么？为什么？</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    foo<span class="token punctuation">:</span><span class="token keyword">function</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token function">foo</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">var</span> func1<span class="token operator">=</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+func1<span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+func1<span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+func1<span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> func2<span class="token operator">=</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> func3<span class="token operator">=</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+func3<span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+func3<span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1613">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            03 闭包—探索词法作用域模型
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1615">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            05 闭包的应用
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img3.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

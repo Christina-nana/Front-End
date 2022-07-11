@@ -1,0 +1,173 @@
+<html><head><meta charset="utf-8"><title>23 导读--开始之前-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        23 导读--开始之前
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-12 14:18:22
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img2.sycdn.imooc.com/5eb9f9130001af0106400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">世上无难事,只要肯登攀。——毛泽东<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家平时几乎每天都在和浏览器打交道，在一些兼容任务比较繁重的团队里，苦逼的前端攻城师们甚至为了兼容各个浏览器而不断地去测试和调试，还要在脑子中记下各种遇到的 BUG 及解决方案。即便如此，很少有同学会去主动地关注和了解浏览器的工作原理，这使得浏览器运行机制成了前端面试中的一个难点。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">与此同时，浏览器运行机制也是大家面试中逃不开的一个热点——它可以作为一个独立的出题点，不管从哪个角度来提问，面试官都能挖出大量的底层知识；它也可以作为一个关联命题点，比如当你被考到复杂的 Promise + setTimeout 这种形式的编码阅读题时，以为自己是对 Promise 没摸透，结果很可能会发现自己只是不懂异步队列；再或者当你对着性能优化类的问题抓耳挠腮时，很可能不知道浏览器的渲染过程或许会是你重要的抓手等等。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">即便没有面试这个大前提，作为资深前端，掌握浏览器运行机制也是极为必要的。无论是当你面对一个诡异如玄学的 Bug 感到莫名其妙时，还是当你手握一个卡顿到令人发指的页面无从下手时，你都应该想到向浏览器层面的知识求助，它会帮助你成为一个更专业、更高效的工程师。</p>
+</div><div class="cl-preview-section"><h2 id="浏览器的”角色“——“搬运工”“翻译官”" style="font-size: 30px;">浏览器的”角色“——“搬运工”+“翻译官”</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在浏览器里输入 <a href="https://www.imooc.com/">https://www.imooc.com/</a> 这个链接，如果你的网络没问题的话，用不了多大会儿时间，你就可以得到一个慕课网的首页：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eb9f961000135ad14920784.png" data-original="//img1.sycdn.imooc.com/5eb9f961000135ad14920784.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个过程，大家可以想象成是我们在给浏览器下达命令：<br>
+喂，浏览器！我想和 <a href="https://www.imooc.com/">https://www.imooc.com/</a> 这个地址的站点有一次<strong>亲密接触</strong>，你给我把它找来！</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">浏览器一听，忙不迭地就跑去你指定的这个地址瞅了瞅，它发现此处栖息的是名为”慕课网“的站点。浏览器清了清嗓子，问：“慕课网，可以把你的信息打包一份给我吗，我这里有一位大佬想要见见你。”<br>
+慕课网喜出望外：“好呀好呀，我每天都在和成千上万喜欢我的用户打交道，非常高兴能和你们建立连接。”，说着就把自己搭了个包。嗖地一声，慕课网的信息包穿越山和大海、出现在了浏览器手里。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">浏览器手握慕课网相关的一坨资源，它没有立刻交给你。作为一个资深跑腿，它深知这坨以 html + css + js + 图片 + 各种附加资源为形态存在的东西对用户来说没有任何意义——咱是来网上冲浪的，又不是来看代码的！带着这种觉悟，浏览器张大嘴巴把资源给”吃“了进去，没过多久，你发现页面渲染出来了、可以用了——这正是浏览器拼命消化完资源之后“吐”出的成果。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5eb9f9bf0001156813220256.png" data-original="//img1.sycdn.imooc.com/5eb9f9bf0001156813220256.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在这个过程当中，浏览器有两个关键工作——首先，把网络资源“取”回来。在这个过程里，浏览器不生产任何额外内容，它只是 Web 世界里的“搬运工”；然后，把这坨资源<strong>消化</strong>掉，像<strong>翻译官</strong>一样，把底层密密麻麻的鬼画符转化为用户喜闻乐见的<strong>可交互页面</strong>。</p>
+</div><div class="cl-preview-section"><h2 id="重新思考这道题" style="font-size: 30px;">重新思考这道题</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这儿有一道我个人非常喜欢的面试题：</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">从输入 URL 到页面加载完成，发生了什么？</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个题目相信很多同学都不陌生，它作为面试题存在的时日，可能比你我写前端的时日都要久。如果说面试的过程时间比较紧凑，在问不了太多问题的情况下，很多面试官一定会问这个问题。通过这一道题，能试出候选人的 N 个知识面，性价比极高。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">其实咱们上面这一通“搬运工”、“翻译官”的描述，大家就可以认为是这道题作答的一个提纲。<br>
+当然了，作为一道核弹级面试题，要答好它自然不是讲个科普小故事这么简单。我们“浏览器原理“这整个大专题，包括后续的“Web计算机网络”专题，都是为了能帮大家答好这个问题作铺垫。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">现在，我希望正在阅读本节内容的各位，都可以在心里琢磨一下这个问题，先形成一份自己的答案。你可以记在心里，但我更建议你写下来。然后，在上述的两个专题学习完毕后，再回过头来重新做一遍这道题，再给自己写一个新的答案。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在本专栏的讲解中，我不会直接告诉大家这个问题的答案。我也建议大家不要去网上搜一些”标准答案“来背。唾手可得的信息，它往往是最贵的——你能搜到的答案，别人也能搜到。万一你们落到同一个面试官手里、背出同一份答案，这就不是你图个方便省事儿这么简单了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">事实上，这个问题本就没有标准答案、没有所谓的对和错之分。区别仅仅在于，你会从哪个角度来答题、能答到什么程度、是否能体现出你确实有自己的一套理解。相应地，最忌讳的就是你去背答案——万一被抓个现行，印象分会骤减至无穷小。针对这道题，我建议大家着重阅读本专栏的浏览器专题和 Web 网络协议专题。书读百遍，其义自见，相信你一定能基于此形成自己的见解。</p>
+</div><div class="cl-preview-section"><h2 id="小结" style="font-size: 30px;">小结</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">本节是浏览器专题的开篇小节，意在帮助大家建立对浏览器的感性认知、同时从整体上把握其命题形式。<br>
+之所以郑重其事地搞了这么一个过渡性的章节，是因为接下来的内容可以说都是妥妥的“硬骨头”。不过不要怕，记住“搬运工”和“翻译官”的比喻，带上当下你心中对上面这道面试题的回答，我们一起来庖丁解牛浏览器运行机制。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1854">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            22 真题手把手：事件的防抖与节流
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1948">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            24 概览与预备知识——让”黑盒“不再神秘
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img4.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>

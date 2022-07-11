@@ -1,0 +1,283 @@
+<html><head><meta charset="utf-8"><title>17 变量提升与暂时性死区-慕课专栏</title>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="renderer" content="webkit">
+			<meta property="qc:admins" content="77103107776157736375">
+			<meta property="wb:webmaster" content="c4f857219bfae3cb">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*">
+			<meta http-equiv="Cache-Control" content="no-transform ">
+			<meta http-equiv="Cache-Control" content="no-siteapp">
+			<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+			<link href="https://moco.imooc.com/captcha/style/captcha.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://www.imooc.com/static/moco/v1.0/dist/css/moco.min.css?t=201907021539" type="text/css">
+			<link rel="stylesheet" href="https://www.imooc.com/static/lib/swiper/swiper-3.4.2.min.css?t=201907021539">
+			<link rel="stylesheet" href="https://static.mukewang.com/static/css/??base.css,common/common-less.css?t=2.5,column/zhuanlanChapter-less.css?t=2.5,course/inc/course_tipoff-less.css?t=2.5?v=201907051055" type="text/css">
+			<link charset="utf-8" rel="stylesheet" href="https://www.imooc.com/static/lib/ueditor/themes/imooc/css/ueditor.css?v=201907021539"><link rel="stylesheet" href="https://www.imooc.com/static/lib/baiduShare/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+			<body><div id="main">
+
+
+<div class="main-con hide-menu">
+    <!-- 左侧菜单 & 索引 -->
+    
+    <div class="right-content" style="padding-left: 0px;">
+        <div class="container clearfix" id="top" style="width: 1134px; display: block;">
+            
+            
+            <div class="center_con js-center_con l" style="width: 1134px;">
+                <div class="article-con">
+                                            <!-- 买过的阅读 -->
+                        
+
+                    
+                    <div class="art-title" style="margin-top: 0px;">
+                        17 变量提升与暂时性死区
+                    </div>
+                    <div class="art-info clearfix">
+                        
+                        <span class="l">
+                            更新时间：2020-05-26 15:08:08
+                        </span>
+                    </div>
+                    <div class="art-top">
+                                                <img src="https://img1.sycdn.imooc.com/5e97b9ec00017b5706400426.jpg" alt="">
+                                                                        <div class="famous-word-box">
+                            <img src="https://www.imooc.com/static/img/column/bg-l.png" alt="" class="bg1 bg">
+                            <img src="https://www.imooc.com/static/img/column/bg-r.png" alt="" class="bg2 bg">
+                            <div class="famous-word">自信和希望是青年的特权。——大仲马<p></p></div>
+                        </div>
+                                            </div>
+                    <div class="art-content js-lookimg">
+                        <div id="article_content">
+                            <div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">本节我们一起来关注到 ES2015 中新增的 let 和 const 关键字相关的考点。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">从难度上来说，本节很难和前面几节相提并论。但既然是能被笔者选进这个专栏的知识块，它必定有“两把刷子” 。事实上，let 和 const 相关的考题，若要就 let 和 const 关键字特性本身提问，确实很难考察出候选人的水平。但是，它们背后所牵扯出的变量提升、暂时性死区等知识点，对一些同学来说却具有相当的挑战性——这块知识属于大家多少都听说过、能说上那么两句，但基本没几个人能说清楚的类型。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><strong>注</strong>：本节所覆盖到的知识点多且琐碎，大家在学习的过程中，需要留心跟随笔者的思路，去尝试建立点与点之间的联系，把细碎的知识点串进一条线里。</p>
+</div><div class="cl-preview-section"><h2 id="从变量提升说起" style="font-size: 30px;">从变量提升说起</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在 ES2015 之前，JS 引擎用 “var” 这个关键字声明所有的变量。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">在 “var” 时代，有一个特别的现象：<strong>不管我们的变量声明是写在程序的哪个角落，最后都会被提到作用域的顶端去</strong>。我们直接用代码来理解这个情况：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> 
+<span class="token keyword">var</span> num <span class="token operator">=</span> <span class="token number">1</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这段代码不会报错，反而会输出一个 undefined。这就是因为变量的声明被“提升”了，它等价于这样：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> num
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span>
+num <span class="token operator">=</span> <span class="token number">1</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">上面这个例子里，我们看到 num 作为全局变量会被提升到全局作用域的头部。在函数作用域里，也会有类似的现象发生：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> 
+  <span class="token keyword">var</span> num <span class="token operator">=</span> <span class="token number">1</span>  
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里同样会输出 undefined，这是因为函数内部的变量声明会被提升至函数作用域的顶端。上面这个例子其实等价于：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">function</span> <span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> num 
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> 
+  num <span class="token operator">=</span> <span class="token number">1</span>  
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">OK，现在大家已经看到了变量提升的效果。那么为啥会有变量提升呢？</p>
+</div><div class="cl-preview-section"><h2 id="变量提升的原理" style="font-size: 30px;">变量提升的原理</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这和咱们在 js 核心部分提到的 js 编译过程有关。咱们一起来复习下：</p>
+</div><div class="cl-preview-section"><blockquote>
+<p style="font-size: 20px; line-height: 38px;">事实上，JS也是有编译阶段的，它和传统语言的区别在于，JS不会早早地把编译工作做完，而是一边编译一边执行。简单来说，所有的JS代码片段在执行之前都会被编译，只是这个编译的过程非常短暂（可能就只有几微妙、或者更短的时间），紧接着这段代码就会被执行。</p>
+</blockquote>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">没错，JS 和其他语言一样，都要经历编译和执行阶段。正是在这个短暂的<strong>编译阶段</strong>里，JS 引擎会搜集所有的变量声明，并且提前让声明生效。至于剩下的语句，则需要等到执行阶段、等到执行到具体的某一句的时候才会生效。这就是变量提升背后的机制。</p>
+</div><div class="cl-preview-section"><h2 id="被禁用的变量提升" style="font-size: 30px;">被禁用的变量提升</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这里我们就聊到了 let 和 const 区别于 var 的一个重要特性——它们不存在变量提升。<br>
+现在我们把上面例子里的 num 用 let 来声明：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> 
+<span class="token keyword">let</span> num <span class="token operator">=</span> <span class="token number">1</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">会发现报错了：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e97b71c000166a617100380.png" data-original="//img1.sycdn.imooc.com/5e97b71c000166a617100380.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">如果改成 const 声明，也会是一样的结局——用 let 和 const 声明的变量，它们的声明生效时机和具体代码的执行时机保持一致。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这样做是因为，早期的声明提升机制，其实容纳了很多程序员的误操作——那些忘记被声明的变量无法在开发阶段被明显地察觉出来，而是以 undefined 这样危险的形式藏匿在你的代码里。为了减少运行时错误，防止暗中使坏的 undefined 带来不可预知的问题，ES6 特意将“声明前不可用”这一点做了强约束。</p>
+</div><div class="cl-preview-section"><h2 id="块作用域" style="font-size: 30px;">块作用域</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">块作用域是伴随 ES6 而生的一个概念。我们把被一对花括号括起来的代码称为一个代码块：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token punctuation">{</span>
+  <span class="token keyword">let</span> me <span class="token operator">=</span> <span class="token string">'xiuyan'</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// 'xiuyan'</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">被这个代码块圈起来的变量集，就是块作用域。</p>
+</div><div class="cl-preview-section"><h2 id="let-与-const" style="font-size: 30px;">let 与 const</h2>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">let 和 const 都是 ES6 中用于变量声明的关键字。我们先把它们分开来看：</p>
+</div><div class="cl-preview-section"><h3 id="let-关键字与-var-关键字">let 关键字与 var 关键字</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">大家理解 let 的时候可以参考 var。let 和 var 非常相似，let 区别于 var 的最关键的地方在于：当我们用 let 声明变量时，变量会被绑定到块作用域上，而 var 是不感知块作用域的。我们先来看下 var 的表现：</p>
+</div><div class="cl-preview-section"><pre class=" language-js"><code class="prism  language-js"><span class="token punctuation">{</span>
+  <span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token string">'xiuyan'</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// 'xiuyan'</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// 'xiuyan' </span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们看到在代码块里里用 var 定义的变量，在代码块之外也能访问到。这时的花括号压根创建不出啥块作用域。</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token punctuation">{</span>
+  <span class="token keyword">let</span> me <span class="token operator">=</span> <span class="token string">'xiuyan'</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// 'xiuyan'</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// 报错</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">而当我们用 let 声明变量时，变量被绑定到了它被声明的那个代码块里。这时块作用域生效了，它表现出了和函数作用域相似的特征——出了块作用域，你就访问不到里面的变量。</p>
+</div><div class="cl-preview-section"><h3 id="const-关键字">const 关键字</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">const 关键字和 let 具备相同的生命周期特性——用 const 声明的变量，也会被绑定到块作用域上。像这样：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token punctuation">{</span>
+  <span class="token keyword">const</span> me <span class="token operator">=</span> <span class="token string">'xiuyan'</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// 'xiuyan'</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>me<span class="token punctuation">)</span> <span class="token comment">// 报错</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">const 与 let、var之间的区别，大家需要引起重视：   const 声明的变量，必须在声明同时被初始化，否则会报错：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> a <span class="token comment">// 这样就会报错</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">报错形式如下：<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e97b8700001b45a17940268.png" data-original="//img1.sycdn.imooc.com/5e97b8700001b45a17940268.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">const 声明的变量，在赋值过后，值不可以再被更改。否则同样会报错：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> me <span class="token operator">=</span> <span class="token string">'xiuyan'</span>
+me <span class="token operator">=</span> <span class="token string">'Bear'</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">报错形式如下：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e97b88300018db717060506.png" data-original="//img1.sycdn.imooc.com/5e97b88300018db717060506.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">值得注意的是，这个规则在声明引用类型时有点不同——引用类型的属性值（包括数组的元素）可以被更改，只要你不修改引用的指向。比如这样：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span>
+<span class="token punctuation">}</span>
+
+me<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Bear'</span> <span class="token comment">// 没问题</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">像这样修改 name 这个属性值，而 me 对象的引用仍然指向原有的内存地址，这种更改就可以被接受。而类似这种：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">const</span> me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'xiuyan'</span>
+<span class="token punctuation">}</span>
+
+me <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'Bear'</span>
+<span class="token punctuation">}</span> <span class="token comment">// 报错</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这样就相当于重新给 me 赋值了，是在尝试把 me 的引用指向一个全新的对象、指向另一块内存空间，这种做法就是不被接受的。<br>
+总之，牢记一点——const 是用来被声明常量的，它的内存空间在哪个位置，这一点一开始就锁死了，不要尝试把 const 定义的变量指向新的内存空间。</p>
+</div><div class="cl-preview-section"><h3 id="暂时性死区">暂时性死区</h3>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">现在大家对块作用域、let&amp;const 特性以及变量提升都有了自己的理解和把握，在这个基础上，我们来理解暂时性死区就是一件非常容易的事情了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">我们来看这样一段代码：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token string">'xiuyan'</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">{</span>
+	me <span class="token operator">=</span> <span class="token string">'bear'</span><span class="token punctuation">;</span>
+	<span class="token keyword">let</span> me<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这样的代码也经常作为面试题来出。面试官会问你：这段代码的运行结果是啥？   事实上，这段代码啥也运行不出来，它会报错：<br>
+<img class="" src="https://img1.sycdn.imooc.com/5e97b9150001e5ef17920660.png" data-original="//img1.sycdn.imooc.com/5e97b9150001e5ef17920660.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">一些同学可能会有点摸不着头脑：这个块作用域和函数作用域都是局部作用域。你说 let 声明前不可用，我理解。但是这个例子中，明明全局作用域也有一个 me 变量。代码块第一行这个 me，按照作用域规则，难道不能引用父级作用域里的 me 吗？为啥会报错呢？</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这是因为 ES6 中有明确的规定：如果区块中存在 let 和 const 命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用域。假如我们尝试在声明前去使用这类变量，就会报错。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这一段会报错的危险区域，有一个专属的名字，叫”暂时性死区“。在我们的 demo 中，以红线为界，上面的区域就是暂时性死区：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e97b938000107a706020248.png" data-original="//img1.sycdn.imooc.com/5e97b938000107a706020248.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这个 demo 里，如果我们想成功引用全局的 me 变量，需要把 let 声明给去掉：</p>
+</div><div class="cl-preview-section"><pre class="  language-js"><code class="prism  language-js"><span class="token keyword">var</span> me <span class="token operator">=</span> <span class="token string">'xiuyan'</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">{</span>
+	me <span class="token operator">=</span> <span class="token string">'bear'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">这时程序就能运行无阻了：</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;"><img class="" src="https://img1.sycdn.imooc.com/5e97b96b0001cd6e11580434.png" data-original="//img1.sycdn.imooc.com/5e97b96b0001cd6e11580434.png" alt="图片描述"></p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">是不是觉得这个“死区”非常鸡贼？它并不意味着引擎感知不到 me 这个变量的存在，恰恰相反，它感知到了，而且它清楚地知道 me 是用 let 声明在当前块里的——正因如此，它才会给这个变量加上暂时性死区的限制。一旦我们把 let 关键字撤走了，它反而也不吭声了。</p>
+</div><div class="cl-preview-section"><p style="font-size: 20px; line-height: 38px;">其实这也就是暂时性死区的本质：当我们进入当前作用域时，let 或者 const 声明的变量已经存在了——它们只是不允许被获取而已。要想获取它们，必须得等到代码执行到声明处。</p>
+</div>}
+                        </div>
+                    </div>
+                                            <!-- 买过的阅读 -->
+                        <div class="art-next-prev clearfix">
+                                                                                                <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1790">
+                                                                    <div class="prev l clearfix">
+                                        <div class="icon l">
+                                            <i class="imv2-arrow3_l"></i>
+                                        </div>
+                                        <p>
+                                            16 起底 Promise/A+——决议程序（Resolution Procedure）
+                                        </p>
+                                    </div>
+                                </a>
+                                                                                                                            <!-- 已买且开放 或者可以试读 -->
+                                    <a href="/read/70/article/1837">
+                                                                    <div class="next r clearfix">
+                                        <p>
+                                            18 ES2015+考点集中解析
+                                        </p>
+                                        <div class="icon r">
+                                            <i class="imv2-arrow3_r"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                                    </div>
+                                    </div>
+                <div class="comments-con js-comments-con" id="coments_con">
+                </div>
+
+                
+            </div>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-jiaQun-new hide" id="modal-jiaQun">
+    <div class="inner" style="">
+        <div class="modal-close js-close-jiaQun">
+            <i class="imv2-close"></i>
+        </div>
+        <div class="content">
+            <img src="https://img2.sycdn.imooc.com/5f7fdf360001c7e905660544.jpg">
+            <div class="right-info">
+                <div class="title">
+                    扫码加入慕课前端核心用户群
+                </div>
+                <div class="desc">
+                                            <p class="mb6">验证信息：<span id="joincode">2010271938441361</span><span class="copy js-copy-joincode">复制</span></p>
+                                        <p class="mb6">QQ讨论群号：906667001</p>
+                                            <p>QQ群URL：<a href="https://jq.qq.com/?_wv=1027&amp;k=AKUF96AI" target="_blank">点击访问</a></p>
+                                    </div>
+            </div>
+            <p class="tip">若遇到搜索不到QQ群或加群失败，请联系客服邮箱:kf@imooc.com</p>
+        </div>
+    </div>
+</div>
+ 
+<!-- 专栏介绍页专栏评价 -->
+
+<!-- 专栏介绍页底部三条评价 -->
+
+<!-- 专栏阅读页弹层目录和介绍页页面目录 -->
+
+<!-- 专栏阅读页发布回复 -->
+
+<!-- 专栏阅读页发布评论 -->
+
+<!-- 专栏阅读页底部评论 -->
+
+<!-- 专栏阅读 单个 评论 -->
+
+<!-- 新增回复和展开三条以外回复 -->
+
+<!-- 立即订阅的弹窗 -->
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>
